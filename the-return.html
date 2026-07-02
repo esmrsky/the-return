@@ -368,6 +368,11 @@
   }
   ::selection{background:var(--ember);color:var(--selection-fg)}
   a{color:inherit}
+  .icon{
+    width:1em;height:1em;display:inline-block;flex:none;
+    stroke:currentColor;stroke-width:1.8;stroke-linecap:round;stroke-linejoin:round;fill:none;
+  }
+  .icon-sprite{position:absolute;width:0;height:0;overflow:hidden}
 
   /* ---------- top progress ---------- */
   #progress{
@@ -375,10 +380,23 @@
     background:var(--ember);z-index:200;
     transition:width .1s linear;
   }
+  .version-link{
+    position:fixed;top:1rem;left:1rem;z-index:181;
+    display:inline-flex;align-items:center;height:2rem;padding:0 .7rem;
+    border:1px solid var(--hair-2);border-radius:100px;background:var(--raise);
+    background:color-mix(in srgb,var(--raise) 88%,transparent);
+    color:var(--cream-dim);font-family:var(--label);font-size:.64rem;
+    letter-spacing:.06em;text-transform:uppercase;text-decoration:none;
+    box-shadow:0 18px 50px rgba(0,0,0,.14);
+    backdrop-filter:blur(14px);-webkit-backdrop-filter:blur(14px);
+    transition:all .2s ease;
+  }
+  .version-link:hover{color:var(--cream);border-color:var(--ember-dim);background:var(--ember-tint)}
+  .version-link:focus-visible{outline:2px solid var(--ember);outline-offset:2px}
 
   /* ---------- appearance controls ---------- */
   .theme-dock{
-    position:fixed;top:1rem;right:1rem;z-index:180;
+    position:static;
     display:flex;align-items:center;gap:.55rem;padding:.42rem;
     background:var(--raise);
     background:color-mix(in srgb,var(--raise) 88%,transparent);
@@ -386,6 +404,21 @@
     box-shadow:0 18px 50px rgba(0,0,0,.18);
     backdrop-filter:blur(14px);-webkit-backdrop-filter:blur(14px);
   }
+  .customizer-shell{
+    position:fixed;top:1rem;right:1rem;z-index:180;
+    display:flex;flex-direction:column;align-items:flex-end;gap:.55rem;
+  }
+  .customizer-toggle{
+    width:2.35rem;height:2.35rem;border-radius:999px;border:1px solid var(--hair-2);
+    background:var(--raise);background:color-mix(in srgb,var(--raise) 88%,transparent);
+    color:var(--cream);display:inline-flex;align-items:center;justify-content:center;
+    cursor:pointer;box-shadow:0 18px 50px rgba(0,0,0,.18);
+    backdrop-filter:blur(14px);-webkit-backdrop-filter:blur(14px);transition:all .2s ease;
+  }
+  .customizer-toggle:hover{border-color:var(--ember-dim);background:var(--ember-tint);color:var(--ember)}
+  .customizer-toggle:focus-visible{outline:2px solid var(--ember);outline-offset:2px}
+  .customizer-toggle .icon{width:1.05rem;height:1.05rem}
+  .customizer-shell:not(.open) .theme-dock{display:none}
   .theme-choices{display:flex;align-items:center;gap:.28rem}
   .theme-choice{
     display:inline-flex;align-items:center;gap:.38rem;height:2rem;
@@ -768,9 +801,10 @@
     .src-grid{grid-template-columns:1fr}
     .hero-orb{opacity:.6}
     .theme-dock{
-      top:auto;right:.75rem;bottom:.75rem;left:.75rem;
       justify-content:space-between;gap:.35rem;overflow:visible;
+      max-width:calc(100vw - 1.5rem);
     }
+    .customizer-shell{top:.75rem;right:.75rem}
     .theme-choices{min-width:0;overflow-x:auto}
     .theme-choice{font-size:.58rem;padding:.2rem .34rem;gap:.28rem}
     .mode-switch{font-size:.58rem;padding:0 .34rem;gap:.34rem}
@@ -799,7 +833,7 @@
     }
     a{color:inherit;text-decoration:none}
     .wrap{max-width:none;padding:0}
-    #progress,.theme-dock,.rail,.scrollcue,.hero-orb,.whitebear,.interactive,.breath,.bridge,.seq{display:none !important}
+    #progress,.version-link,.customizer-shell,.theme-dock,.rail,.scrollcue,.hero-orb,.whitebear,.interactive,.breath,.bridge,.seq{display:none !important}
     .hero{min-height:auto;padding:0 0 1.1rem;border-bottom:1px solid #d8cdb8;overflow:visible}
     .hero h1{font-size:38pt;line-height:1;margin:.7rem 0 0;color:#1b1710;letter-spacing:0}
     .hero h1 em,.eyebrow,.move h2 .glyph,.synth p em,.cav-item .m{color:#a64112}
@@ -835,45 +869,61 @@
 </head>
 <body>
 
-<div id="progress"></div>
+<svg class="icon-sprite" aria-hidden="true" focusable="false">
+  <symbol id="icon-palette" viewBox="0 0 24 24">
+    <path d="M12 22a10 10 0 1 1 10-10 4 4 0 0 1-4 4h-1.4a2 2 0 0 0-1.8 2.9l.2.4A1.8 1.8 0 0 1 13.4 22H12z"></path>
+    <circle cx="6.5" cy="11.5" r="1"></circle>
+    <circle cx="9.5" cy="7.5" r="1"></circle>
+    <circle cx="14.5" cy="7.5" r="1"></circle>
+    <circle cx="17.5" cy="11.5" r="1"></circle>
+  </symbol>
+</svg>
 
-<div class="theme-dock" aria-label="Appearance">
-  <div class="theme-choices" role="group" aria-label="Design direction">
-    <button class="theme-choice" type="button" data-direction-choice="laurel" aria-pressed="true" aria-label="Laurel design direction" title="Laurel Green">
-      <span class="theme-swatch" aria-hidden="true"></span><span>Laurel</span>
-    </button>
-    <button class="theme-choice" type="button" data-direction-choice="ember" aria-pressed="false" aria-label="Ember design direction" title="Ember Orange">
-      <span class="theme-swatch" aria-hidden="true"></span><span>Ember</span>
-    </button>
-    <button class="theme-choice" type="button" data-direction-choice="green" aria-pressed="false" aria-label="Green design direction" title="Green">
-      <span class="theme-swatch" aria-hidden="true"></span><span>Green</span>
-    </button>
-    <button class="theme-choice" type="button" data-direction-choice="blue" aria-pressed="false" aria-label="Blue design direction" title="Blue">
-      <span class="theme-swatch" aria-hidden="true"></span><span>Blue</span>
-    </button>
-    <button class="theme-choice" type="button" data-direction-choice="cobalt" aria-pressed="false" aria-label="Cobalt design direction" title="Cobalt Blue">
-      <span class="theme-swatch" aria-hidden="true"></span><span>Cobalt</span>
-    </button>
-    <button class="theme-choice" type="button" data-direction-choice="purple" aria-pressed="false" aria-label="Purple design direction" title="Purple">
-      <span class="theme-swatch" aria-hidden="true"></span><span>Purple</span>
-    </button>
-    <button class="theme-choice" type="button" data-direction-choice="red" aria-pressed="false" aria-label="Red design direction" title="Red">
-      <span class="theme-swatch" aria-hidden="true"></span><span>Red</span>
-    </button>
-    <button class="theme-choice" type="button" data-direction-choice="custom" aria-pressed="false" aria-label="Custom design color" title="Custom Color">
-      <span class="theme-swatch" aria-hidden="true"></span><span>Custom</span>
-    </button>
-  </div>
-  <label class="mode-switch" for="modeToggle">
-    <input type="checkbox" id="modeToggle" aria-label="Toggle light mode">
-    <span class="switch-ui" aria-hidden="true"><span></span></span>
-    <span id="modeLabel">Dark</span>
-  </label>
-  <div class="custom-panel" id="customPanel" aria-label="Custom color controls">
-    <label for="customColor"><span>Pick</span><input type="color" id="customColor" value="#1ED760"></label>
-    <label for="customR"><span>R</span><input type="number" id="customR" min="0" max="255" value="30" inputmode="numeric"></label>
-    <label for="customG"><span>G</span><input type="number" id="customG" min="0" max="255" value="215" inputmode="numeric"></label>
-    <label for="customB"><span>B</span><input type="number" id="customB" min="0" max="255" value="96" inputmode="numeric"></label>
+<div id="progress"></div>
+<a class="version-link" href="new/">Updated version</a>
+
+<div class="customizer-shell" id="customizerShell">
+  <button class="customizer-toggle" id="customizerToggle" type="button" aria-label="Open appearance customizer" aria-expanded="false" aria-controls="appearancePanel">
+    <svg class="icon" aria-hidden="true" focusable="false"><use href="#icon-palette"></use></svg>
+  </button>
+  <div class="theme-dock" id="appearancePanel" aria-label="Appearance">
+    <div class="theme-choices" role="group" aria-label="Design direction">
+      <button class="theme-choice" type="button" data-direction-choice="laurel" aria-pressed="true" aria-label="Laurel design direction" title="Laurel Green">
+        <span class="theme-swatch" aria-hidden="true"></span><span>Laurel</span>
+      </button>
+      <button class="theme-choice" type="button" data-direction-choice="ember" aria-pressed="false" aria-label="Ember design direction" title="Ember Orange">
+        <span class="theme-swatch" aria-hidden="true"></span><span>Ember</span>
+      </button>
+      <button class="theme-choice" type="button" data-direction-choice="green" aria-pressed="false" aria-label="Green design direction" title="Green">
+        <span class="theme-swatch" aria-hidden="true"></span><span>Green</span>
+      </button>
+      <button class="theme-choice" type="button" data-direction-choice="blue" aria-pressed="false" aria-label="Blue design direction" title="Blue">
+        <span class="theme-swatch" aria-hidden="true"></span><span>Blue</span>
+      </button>
+      <button class="theme-choice" type="button" data-direction-choice="cobalt" aria-pressed="false" aria-label="Cobalt design direction" title="Cobalt Blue">
+        <span class="theme-swatch" aria-hidden="true"></span><span>Cobalt</span>
+      </button>
+      <button class="theme-choice" type="button" data-direction-choice="purple" aria-pressed="false" aria-label="Purple design direction" title="Purple">
+        <span class="theme-swatch" aria-hidden="true"></span><span>Purple</span>
+      </button>
+      <button class="theme-choice" type="button" data-direction-choice="red" aria-pressed="false" aria-label="Red design direction" title="Red">
+        <span class="theme-swatch" aria-hidden="true"></span><span>Red</span>
+      </button>
+      <button class="theme-choice" type="button" data-direction-choice="custom" aria-pressed="false" aria-label="Custom design color" title="Custom Color">
+        <span class="theme-swatch" aria-hidden="true"></span><span>Custom</span>
+      </button>
+    </div>
+    <label class="mode-switch" for="modeToggle">
+      <input type="checkbox" id="modeToggle" aria-label="Toggle light mode">
+      <span class="switch-ui" aria-hidden="true"><span></span></span>
+      <span id="modeLabel">Dark</span>
+    </label>
+    <div class="custom-panel" id="customPanel" aria-label="Custom color controls">
+      <label for="customColor"><span>Pick</span><input type="color" id="customColor" value="#1ED760"></label>
+      <label for="customR"><span>R</span><input type="number" id="customR" min="0" max="255" value="30" inputmode="numeric"></label>
+      <label for="customG"><span>G</span><input type="number" id="customG" min="0" max="255" value="215" inputmode="numeric"></label>
+      <label for="customB"><span>B</span><input type="number" id="customB" min="0" max="255" value="96" inputmode="numeric"></label>
+    </div>
   </div>
 </div>
 
@@ -1255,6 +1305,8 @@
   var customR = document.getElementById('customR');
   var customG = document.getElementById('customG');
   var customB = document.getElementById('customB');
+  var customizerShell = document.getElementById('customizerShell');
+  var customizerToggle = document.getElementById('customizerToggle');
   var themeColors = {
     ember: { dark:'#0E0D0B', light:'#FBF4E8' },
     laurel: { dark:'#0B1210', light:'#F4F8F0' },
@@ -1268,6 +1320,26 @@
   var validDirections = Object.keys(themeColors);
   var customTokenNames = ['--ember','--accent-rgb','--ember-dim','--ember-tint','--ember-glow','--ember-hot','--accent-contrast','--selection-fg'];
   var customHex = loadCustomColor();
+
+  function setCustomizerOpen(open){
+    if(!customizerShell || !customizerToggle) return;
+    customizerShell.classList.toggle('open', open);
+    customizerToggle.setAttribute('aria-expanded', String(open));
+    customizerToggle.setAttribute('aria-label', open ? 'Close appearance customizer' : 'Open appearance customizer');
+  }
+
+  if(customizerToggle){
+    customizerToggle.addEventListener('click', function(){
+      setCustomizerOpen(!customizerShell.classList.contains('open'));
+    });
+    document.addEventListener('click', function(e){
+      if(!customizerShell || !customizerShell.classList.contains('open')) return;
+      if(!customizerShell.contains(e.target)) setCustomizerOpen(false);
+    });
+    document.addEventListener('keydown', function(e){
+      if(e.key === 'Escape') setCustomizerOpen(false);
+    });
+  }
 
   function clampChannel(value){
     value = parseInt(value, 10);
