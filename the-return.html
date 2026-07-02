@@ -380,19 +380,20 @@
     background:var(--ember);z-index:200;
     transition:width .1s linear;
   }
-  .version-link{
+  .version-toggle{
     position:fixed;top:1rem;left:1rem;z-index:181;
-    display:inline-flex;align-items:center;height:2rem;padding:0 .7rem;
+    display:inline-flex;align-items:center;height:2.35rem;padding:0 1rem;
     border:1px solid var(--hair-2);border-radius:100px;background:var(--raise);
     background:color-mix(in srgb,var(--raise) 88%,transparent);
     color:var(--cream-dim);font-family:var(--label);font-size:.64rem;
     letter-spacing:.06em;text-transform:uppercase;text-decoration:none;
     box-shadow:0 18px 50px rgba(0,0,0,.14);
     backdrop-filter:blur(14px);-webkit-backdrop-filter:blur(14px);
+    cursor:pointer;
     transition:all .2s ease;
   }
-  .version-link:hover{color:var(--cream);border-color:var(--ember-dim);background:var(--ember-tint)}
-  .version-link:focus-visible{outline:2px solid var(--ember);outline-offset:2px}
+  .version-toggle:hover{color:var(--cream);border-color:var(--ember-dim);background:var(--ember-tint)}
+  .version-toggle:focus-visible{outline:2px solid var(--ember);outline-offset:2px}
 
   /* ---------- appearance controls ---------- */
   .theme-dock{
@@ -564,8 +565,9 @@
   }
   .lens-card .lens-label{
     font-family:var(--label);font-size:.68rem;letter-spacing:.2em;text-transform:uppercase;
-    display:block;margin-bottom:.9rem;
+    display:flex;align-items:center;gap:.42rem;margin-bottom:.9rem;
   }
+  .lens-card .lens-label .icon{font-size:.9rem;opacity:.88}
   .lens-card p{font-size:.96rem;line-height:1.66}
   .lens-card p + p{margin-top:.8rem}
   .lens-card .cite{
@@ -648,6 +650,29 @@
   .seq-name{font-family:var(--display);font-size:clamp(1.5rem,4vw,2.3rem);font-weight:var(--display-weight);letter-spacing:0}
   .seq-desc{font-size:.92rem;color:var(--cream-dim);text-align:right;max-width:20rem;justify-self:end}
   .seq-item:hover .seq-name{color:var(--ember)}
+
+  .model-gloss,.example-strip,.choice-rule,.terms-strip{
+    margin-top:1.35rem;border:1px solid var(--hair);background:var(--raise);
+    border-radius:8px;padding:1rem 1.05rem;
+  }
+  .model-gloss{display:grid;grid-template-columns:repeat(3,1fr);gap:.8rem;margin-top:1.45rem}
+  .gloss-item,.example-chip,.choice-item,.term-item{
+    display:flex;gap:.65rem;align-items:flex-start;color:var(--cream-dim);
+    font-size:.9rem;line-height:1.55;
+  }
+  .gloss-item b,.example-chip b,.choice-item b,.term-item b{color:var(--cream);font-weight:600}
+  .gloss-item .icon,.example-chip .icon,.choice-item .icon,.term-item .icon{margin-top:.22rem;color:var(--ember)}
+  .example-strip{
+    display:grid;grid-template-columns:auto 1fr;gap:.8rem 1rem;align-items:start;
+    max-width:var(--read);
+  }
+  .example-label{
+    display:inline-flex;align-items:center;gap:.45rem;font-family:var(--label);
+    font-size:.66rem;letter-spacing:.16em;text-transform:uppercase;color:var(--ember);
+    white-space:nowrap;
+  }
+  .example-list{display:grid;gap:.55rem}
+  .choice-rule,.terms-strip{display:grid;grid-template-columns:1fr 1fr;gap:.85rem}
 
   /* ---------- rail ---------- */
   .rail{
@@ -780,6 +805,7 @@
   .cav-list{display:grid;gap:1.1rem;max-width:var(--read)}
   .cav-item{display:grid;grid-template-columns:auto 1fr;gap:1rem;font-family:var(--label);font-size:.84rem;line-height:1.7;color:var(--cream-dim)}
   .cav-item .m{color:var(--ember)}
+  .cav-item .m .icon{width:1rem;height:1rem;margin-top:.22rem}
   .cav-item b{color:var(--cream);font-weight:500}
 
   .sources{padding:4rem 0 2rem;border-top:1px solid var(--hair)}
@@ -787,6 +813,7 @@
   .src-grid{display:grid;grid-template-columns:1fr 1fr;gap:.7rem 2.4rem;max-width:52rem}
   .src-grid p{font-family:var(--label);font-size:.76rem;line-height:1.7;color:var(--cream-dim)}
   .src-grid p b{color:var(--cream);font-weight:500}
+  .src-grid a{color:var(--cream);text-decoration-color:var(--ember-dim);text-underline-offset:.18em}
 
   footer{padding:4rem 0 5rem;border-top:1px solid var(--hair)}
   footer p{font-family:var(--label);font-size:.72rem;letter-spacing:.08em;color:var(--cream-faint);line-height:1.8}
@@ -809,6 +836,8 @@
     .theme-choice{font-size:.58rem;padding:.2rem .34rem;gap:.28rem}
     .mode-switch{font-size:.58rem;padding:0 .34rem;gap:.34rem}
     .custom-panel{top:auto;bottom:calc(100% + .45rem);right:0;flex-wrap:wrap;justify-content:flex-end}
+    .model-gloss,.choice-rule,.terms-strip{grid-template-columns:1fr}
+    .example-strip{grid-template-columns:1fr}
   }
 
   @media(max-width:500px){
@@ -1235,6 +1264,14 @@
     .orb{transition:none !important}
     *{transition-duration:.001ms !important}
   }
+
+  /* Version toggling in-place */
+  html.show-original .ver-upd {
+    display: none !important;
+  }
+  html:not(.show-original) .ver-orig {
+    display: none !important;
+  }
 </style>
 </head>
 <body>
@@ -1247,10 +1284,76 @@
     <circle cx="14.5" cy="7.5" r="1"></circle>
     <circle cx="17.5" cy="11.5" r="1"></circle>
   </symbol>
+  <symbol id="icon-book" viewBox="0 0 24 24">
+    <path d="M4 19.5A2.5 2.5 0 0 1 6.5 17H20"></path>
+    <path d="M4 4.5A2.5 2.5 0 0 1 6.5 2H20v20H6.5A2.5 2.5 0 0 1 4 19.5z"></path>
+  </symbol>
+  <symbol id="icon-microscope" viewBox="0 0 24 24">
+    <path d="M6 18h8"></path>
+    <path d="M3 22h18"></path>
+    <path d="M14 22a7 7 0 0 0 7-7"></path>
+    <path d="M9 14 4 9l3-3 5 5"></path>
+    <path d="m10 12 5-5"></path>
+    <path d="m14 3 7 7"></path>
+  </symbol>
+  <symbol id="icon-route" viewBox="0 0 24 24">
+    <circle cx="6" cy="19" r="3"></circle>
+    <circle cx="18" cy="5" r="3"></circle>
+    <path d="M9 19h2a4 4 0 0 0 4-4V9"></path>
+  </symbol>
+  <symbol id="icon-tag" viewBox="0 0 24 24">
+    <path d="M20.6 13.4 13.4 20.6a2 2 0 0 1-2.8 0L3 13V3h10l7.6 7.6a2 2 0 0 1 0 2.8z"></path>
+    <circle cx="7.5" cy="7.5" r="1"></circle>
+  </symbol>
+  <symbol id="icon-bell-off" viewBox="0 0 24 24">
+    <path d="m2 2 20 20"></path>
+    <path d="M8.7 4.7A6 6 0 0 1 18 10v4l2 2H9"></path>
+    <path d="M6 10v4l-2 2h10"></path>
+    <path d="M9 18a3 3 0 0 0 6 0"></path>
+  </symbol>
+  <symbol id="icon-message" viewBox="0 0 24 24">
+    <path d="M21 15a4 4 0 0 1-4 4H8l-5 3V7a4 4 0 0 1 4-4h10a4 4 0 0 1 4 4z"></path>
+  </symbol>
+  <symbol id="icon-hand" viewBox="0 0 24 24">
+    <path d="M18 11V6a2 2 0 0 0-4 0v5"></path>
+    <path d="M14 10V4a2 2 0 0 0-4 0v7"></path>
+    <path d="M10 10V5a2 2 0 0 0-4 0v8"></path>
+    <path d="M6 13 5 12a2 2 0 0 0-3 2l5 7h9a4 4 0 0 0 4-4v-6a2 2 0 0 0-4 0v1"></path>
+  </symbol>
+  <symbol id="icon-waves" viewBox="0 0 24 24">
+    <path d="M2 8c2 0 2-2 4-2s2 2 4 2 2-2 4-2 2 2 4 2 2-2 4-2"></path>
+    <path d="M2 14c2 0 2-2 4-2s2 2 4 2 2-2 4-2 2 2 4 2 2-2 4-2"></path>
+    <path d="M2 20c2 0 2-2 4-2s2 2 4 2 2-2 4-2 2 2 4 2 2-2 4-2"></path>
+  </symbol>
+  <symbol id="icon-reply" viewBox="0 0 24 24">
+    <path d="m9 17-5-5 5-5"></path>
+    <path d="M20 18v-2a4 4 0 0 0-4-4H4"></path>
+  </symbol>
+  <symbol id="icon-anchor" viewBox="0 0 24 24">
+    <circle cx="12" cy="5" r="3"></circle>
+    <path d="M12 8v13"></path>
+    <path d="M5 12H2a10 10 0 0 0 20 0h-3"></path>
+  </symbol>
+  <symbol id="icon-alert" viewBox="0 0 24 24">
+    <path d="M10.3 3.9 1.8 18a2 2 0 0 0 1.7 3h17a2 2 0 0 0 1.7-3L13.7 3.9a2 2 0 0 0-3.4 0z"></path>
+    <path d="M12 9v4"></path>
+    <path d="M12 17h.01"></path>
+  </symbol>
+  <symbol id="icon-repeat" viewBox="0 0 24 24">
+    <path d="m17 2 4 4-4 4"></path>
+    <path d="M3 11V9a3 3 0 0 1 3-3h15"></path>
+    <path d="m7 22-4-4 4-4"></path>
+    <path d="M21 13v2a3 3 0 0 1-3 3H3"></path>
+  </symbol>
+  <symbol id="icon-wind" viewBox="0 0 24 24">
+    <path d="M3 8h12a3 3 0 1 0-3-3"></path>
+    <path d="M3 12h18"></path>
+    <path d="M3 16h12a3 3 0 1 1-3 3"></path>
+  </symbol>
 </svg>
 
 <div id="progress"></div>
-<a class="version-link" href="new/">Updated version</a>
+<button class="version-toggle" id="versionToggle" type="button" aria-label="Switch content version">Switch to Original Version</button>
 
 <div class="customizer-shell" id="customizerShell">
   <button class="customizer-toggle" id="customizerToggle" type="button" aria-label="Open appearance customizer" aria-expanded="false" aria-controls="appearancePanel">
@@ -1313,7 +1416,7 @@
   <div class="wrap">
     <div class="eyebrow">Practices for reconnecting with God</div>
     <h1>Be still,<br><em>and return.</em></h1>
-    <p class="sub">You can't empty your mind on command &mdash; the harder you shove a thought away, the louder it gets back. But there is a sequence that works: quiet the input, empty the well, release your grip, meet what rises, and reposition. Each move has a desert-monastic practice seventeen centuries deep, and a mechanism modern psychology can finally name.</p>
+    <p class="sub">You can't empty your mind on command &mdash; the harder you shove a thought away, the louder it gets back. But there is a sequence to practice: quiet the input, empty the well, release your grip, meet what rises, and reposition. Each move has roots or parallels in Scripture, desert practice, and later contemplative tradition, with mechanisms modern psychology can help name.</p>
     <div class="scrollcue"><span></span>Begin</div>
   </div>
 </header>
@@ -1326,17 +1429,23 @@
     <p class="lead">Every claim below is sorted into one of three lenses, so you always know what kind of thing you're being told. They're never blended.</p>
     <div class="legend">
       <div class="lens-card lens-practice">
-        <span class="lens-label">Practice</span>
+        <span class="lens-label ver-orig">Practice</span><span class="lens-label ver-upd"><svg class="icon" aria-hidden="true" focusable="false"><use href="#icon-book"></use></svg>Practice</span>
         <p>The inherited discipline &mdash; what to actually do. Drawn from the contemplative and monastic tradition. This is <b style="color:var(--cream);font-weight:600">observation</b>: what the tradition holds.</p>
       </div>
       <div class="lens-card lens-evidence">
-        <span class="lens-label">Evidence</span>
+        <span class="lens-label ver-orig">Evidence</span><span class="lens-label ver-upd"><svg class="icon" aria-hidden="true" focusable="false"><use href="#icon-microscope"></use></svg>Evidence</span>
         <p>The mechanism, from psychology and neuroscience. Measured, replicated, cited. Also <b style="color:var(--cream);font-weight:600">observation</b>: what the research found.</p>
       </div>
       <div class="lens-card lens-framework">
-        <span class="lens-label">Framework</span>
+        <span class="lens-label ver-orig">Framework</span>
+        <span class="lens-label ver-upd"><svg class="icon" aria-hidden="true" focusable="false"><use href="#icon-route"></use></svg>Framework</span>
         <p>My reading &mdash; how it connects to the Subscription Model (wanting &rarr; counterfeit resolution). Marked in orange because it is <b style="color:var(--ember);font-weight:600">interpretation</b>, not a finding.</p>
       </div>
+    </div>
+    <div class="model-gloss" aria-label="Subscription Model glossary">
+      <div class="gloss-item"><svg class="icon" aria-hidden="true" focusable="false"><use href="#icon-tag"></use></svg><div><b>Offer</b><br>the stress-thought's promise: solve this now and you will feel safe.</div></div>
+      <div class="gloss-item"><svg class="icon" aria-hidden="true" focusable="false"><use href="#icon-repeat"></use></svg><div><b>Altar</b><br>the place attention keeps returning: the feed, the replay, the imagined fix.</div></div>
+      <div class="gloss-item"><svg class="icon" aria-hidden="true" focusable="false"><use href="#icon-route"></use></svg><div><b>Rut</b><br>the worn mental path that makes the next loop easier to start.</div></div>
     </div>
     <p class="key-note">A boundary worth stating up front: the evidence validates <b style="color:var(--cream)">mechanisms</b> &mdash; how attention and emotion behave &mdash; not the prayers themselves as clinical treatments. Where a link between old practice and new science is a <b style="color:var(--cream)">parallel</b> rather than a documented lineage, it says so.</p>
   </div>
@@ -1348,10 +1457,10 @@
     <div class="eyebrow">The premise</div>
     <h2 class="read">Why the mind won't go quiet when you order it to.</h2>
     <div class="read">
-      <p>In 1987, the psychologist Daniel Wegner asked people to do one thing: sit for five minutes and <strong>not</strong> think about a white bear. They rang a bell every time they failed. They failed constantly &mdash; and when the suppression period ended, they thought about the bear <strong>even more</strong> than a group who'd been told to think about it all along. He called it the rebound effect (Wegner et al., <em style="font-style:normal;color:var(--cream-dim)">Journal of Personality and Social Psychology</em>, 1987).</p>
+      <p>In 1987, the psychologist Daniel Wegner asked people to do one thing: sit for five minutes and <strong>not</strong> think about a white bear. They rang a bell every time the thought intruded. It intruded repeatedly &mdash; and when the suppression period ended, they thought about the bear <strong>even more</strong> than a group who'd been told to think about it all along. He called it the rebound effect (Wegner et al., <em style="font-style:normal;color:var(--cream-dim)">Journal of Personality and Social Psychology</em>, 1987).</p>
       <p>The reason is structural. To suppress a thought, one part of the mind has to keep <strong>checking</strong> whether the thought is still gone &mdash; which means it has to keep the thought loaded to check for it. The monitor summons what the suppressor is trying to banish. Push harder, lose worse.</p>
       <p class="pull">You don't win by pushing the thought out. You win by occupying the space with something else.</p>
-      <p>That escape hatch came from Wegner's own lab: the group given a specific thing to focus on instead &mdash; picture a red Volkswagen &mdash; didn't rebound. Redirection worked where suppression failed. That single fact is the hinge of everything that follows: not <em style="font-style:normal;color:var(--cream)">stop the thought</em>, but <em style="font-style:normal;color:var(--cream)">decline it and turn</em>. The desert monks had the phenomenology cold sixteen hundred years earlier: you cannot keep a thought from arriving. You can only decline to keep it.</p>
+      <p>That escape hatch came from Wegner's own lab: the group given a specific thing to focus on instead &mdash; picture a red Volkswagen &mdash; did not show the same rebound. Redirection helped where suppression failed. That single fact is the hinge of everything that follows: not <em style="font-style:normal;color:var(--cream)">stop the thought</em>, but <em style="font-style:normal;color:var(--cream)">decline it and turn</em>. The desert monks had the phenomenology cold: you cannot keep a thought from arriving. You can only decline to keep it.</p>
     </div>
 
     <!-- white bear interactive -->
@@ -1369,8 +1478,8 @@
 
     <div class="read">
       <div class="lens-card lens-framework" style="margin-top:.5rem">
-        <span class="lens-label">Framework</span>
-        <p>A "stress thought" is rarely just static. In the Subscription Model it's the <strong style="color:var(--cream);font-weight:600">wanting-loop pitching a counterfeit resolution</strong>: <em>solve this now, rehearse it once more, and you'll finally feel safe.</em> Suppression pays the pitch attention. Redirection declines the offer. The five moves ahead are, underneath, five refusals.</p>
+        <span class="lens-label ver-orig">Framework</span><span class="lens-label ver-upd"><svg class="icon" aria-hidden="true" focusable="false"><use href="#icon-route"></use></svg>Framework</span>
+        <p>A "stress thought" is rarely just static. In the Subscription Model it is the <strong style="color:var(--cream);font-weight:600">wanting-loop pitching a counterfeit resolution</strong>: <em>solve this now, rehearse it once more, and you'll finally feel safe.</em> Suppression pays the pitch attention. Redirection declines the offer. The five moves ahead are, underneath, five practiced refusals.</p>
       </div>
     </div>
   </div>
@@ -1397,23 +1506,31 @@
       <div class="eyebrow">Move 01 &middot; Quiet</div>
       <h2>Lower the <span class="glyph">input.</span></h2>
       <p class="lede">Before you try to still anything internal, cut the signal coming in. <b>Noise isn't only sound</b> &mdash; it's input: feeds, notifications, the ambient hum of other people's expectations you keep running in the background.</p>
+      <div class="example-strip">
+        <span class="example-label"><svg class="icon" aria-hidden="true" focusable="false"><use href="#icon-bell-off"></use></svg>Everyday use</span>
+        <div class="example-list">
+          <div class="example-chip"><svg class="icon" aria-hidden="true" focusable="false"><use href="#icon-bell-off"></use></svg><div><b>Two minutes before prayer:</b> put the phone face down, close the extra tabs, and let the room get boring on purpose.</div></div>
+          <div class="example-chip"><svg class="icon" aria-hidden="true" focusable="false"><use href="#icon-route"></use></svg><div><b>When worry is loud:</b> lower one input first. The sequence starts outside the head.</div></div>
+        </div>
+      </div>
     </div>
     <div class="lens-grid">
       <div class="lens-card lens-practice">
-        <span class="lens-label">Practice</span>
+        <span class="lens-label ver-orig">Practice</span><span class="lens-label ver-upd"><svg class="icon" aria-hidden="true" focusable="false"><use href="#icon-book"></use></svg>Practice</span>
         <p>The desert fathers fled to the cell &mdash; not to escape people but to face themselves before God. Abba Moses' counsel was blunt: go, sit in your cell, and the cell will teach you everything.</p>
         <p>Henri Nouwen named solitude "the furnace of transformation," the place where the performing self burns off. The aim isn't blankness; it's dropping the input low enough that a quieter voice becomes audible.</p>
         <span class="cite">Sayings of the Desert Fathers · Nouwen, The Way of the Heart</span>
       </div>
       <div class="lens-card lens-evidence">
-        <span class="lens-label">Evidence</span>
+        <span class="lens-label ver-orig">Evidence</span><span class="lens-label ver-upd"><svg class="icon" aria-hidden="true" focusable="false"><use href="#icon-microscope"></use></svg>Evidence</span>
         <p>Mind-wandering fills roughly half of waking life and tracks with lower mood, not higher (Killingsworth &amp; Gilbert, <span style="color:var(--cream-dim)">Science</span>, 2010).</p>
-        <p>That self-referential chatter runs on the default mode network (Raichle et al., 2001) &mdash; the same network that goes hyperactive in rumination and depression, and that quiets when attention settles (Brewer et al., <span style="color:var(--cream-dim)">PNAS</span>, 2011). Less input, less fuel for the loop.</p>
+        <p>That kind of internally focused self-talk often recruits the default mode network (Raichle et al., 2001). Brewer et al. found that experienced meditators showed lower activation in key default-mode nodes during meditation (Brewer et al., <span style="color:var(--cream-dim)">PNAS</span>, 2011). Less input does not cure rumination; it gives the loop less material.</p>
         <span class="cite">Killingsworth &amp; Gilbert 2010 · Raichle 2001 · Brewer 2011</span>
       </div>
       <div class="lens-card lens-framework">
-        <span class="lens-label">Framework</span>
-        <p>Solitude is where you stop outsourcing your sense of self to the room. In your terms, the feed is an altar you bow to for identity; stepping away from it is the first refusal &mdash; the precondition that makes every later move possible.</p>
+        <span class="lens-label ver-orig">Framework</span>
+        <span class="lens-label ver-upd"><svg class="icon" aria-hidden="true" focusable="false"><use href="#icon-route"></use></svg>Framework</span>
+        <p>Solitude is where you stop outsourcing your sense of self to the room. In your terms, the feed can become an altar you return to for identity; stepping away from it is the first refusal &mdash; the precondition that makes every later move possible.</p>
       </div>
     </div>
   </div>
@@ -1426,23 +1543,31 @@
       <div class="eyebrow">Move 02 &middot; Empty</div>
       <h2>Pour out the <span class="glyph">well.</span></h2>
       <p class="lede">Don't skip the noise in your head &mdash; <b>name it.</b> But name it <b>to God</b>, not into the air. That one difference is what separates release from rehearsal.</p>
+      <div class="example-strip">
+        <span class="example-label"><svg class="icon" aria-hidden="true" focusable="false"><use href="#icon-message"></use></svg>Everyday use</span>
+        <div class="example-list">
+          <div class="example-chip"><svg class="icon" aria-hidden="true" focusable="false"><use href="#icon-message"></use></svg><div><b>Say the true sentence:</b> "God, I am scared that ____. I want to control ____. But I trust you with ____."</div></div>
+          <div class="example-chip"><svg class="icon" aria-hidden="true" focusable="false"><use href="#icon-repeat"></use></svg><div><b>Watch the difference:</b> if the sentence makes the loop hotter, you are rehearsing. If it hands the load off, you are lamenting.</div></div>
+        </div>
+      </div>
     </div>
     <div class="lens-grid">
       <div class="lens-card lens-practice">
-        <span class="lens-label">Practice</span>
+        <span class="lens-label ver-orig">Practice</span><span class="lens-label ver-upd"><svg class="icon" aria-hidden="true" focusable="false"><use href="#icon-book"></use></svg>Practice</span>
         <p>This is the work of the lament psalms. Psalm 13 spends four verses on raw complaint &mdash; <span style="font-family:var(--display);font-style:italic">How long, O Lord? Will you forget me forever?</span> &mdash; then turns: <span style="font-family:var(--display);font-style:italic">But I have trusted in your steadfast love.</span></p>
         <p>The turn is deliberate, and it lands <em style="font-style:normal;color:var(--cream)">before</em> the feeling resolves. About a third of the Psalter is lament: the tradition hands grief a script and, crucially, a direction.</p>
         <span class="cite">Psalm 13 · the lament tradition of the Psalter</span>
       </div>
       <div class="lens-card lens-evidence">
-        <span class="lens-label">Evidence</span>
+        <span class="lens-label ver-orig">Evidence</span><span class="lens-label ver-upd"><svg class="icon" aria-hidden="true" focusable="false"><use href="#icon-microscope"></use></svg>Evidence</span>
         <p>Naming a feeling measurably calms the brain's alarm. When people label an emotion, amygdala activity drops and the right ventrolateral prefrontal cortex comes online &mdash; "affect labeling," described as putting the brakes on emotion (Lieberman et al., <span style="color:var(--cream-dim)">Psychological Science</span>, 2007).</p>
-        <p>Writing worries out works similarly (Ramirez &amp; Beilock, 2011). Lament is labeling addressed to Someone, which hands the load off; open-ended venting just re-runs the alarm.</p>
+        <p>Briefly writing worries before a stressful task can reduce worry's performance cost (Ramirez &amp; Beilock, 2011). Lament is labeling addressed to Someone, which hands the load off; open-ended rehearsal can just re-run the alarm.</p>
         <span class="cite">Lieberman 2007 · Ramirez &amp; Beilock 2011</span>
       </div>
       <div class="lens-card lens-framework">
-        <span class="lens-label">Framework</span>
-        <p>Venting <strong style="color:var(--cream);font-weight:600">refills</strong> the well &mdash; it's rumination with an audience. Lament <strong style="color:var(--cream);font-weight:600">empties</strong> it, because the complaint is handed off rather than looped. And the turn &mdash; <em>"but I trust"</em> &mdash; is you re-ordering your loves mid-sentence, out loud.</p>
+        <span class="lens-label ver-orig">Framework</span>
+        <span class="lens-label ver-upd"><svg class="icon" aria-hidden="true" focusable="false"><use href="#icon-route"></use></svg>Framework</span>
+        <p>Rehearsal <strong style="color:var(--cream);font-weight:600">refills</strong> the well &mdash; it is rumination with an audience. Lament <strong style="color:var(--cream);font-weight:600">empties</strong> it, because the complaint is given an address and a turn. And that turn &mdash; <em>"but I trust"</em> &mdash; is you re-ordering your loves mid-sentence, out loud.</p>
       </div>
     </div>
   </div>
@@ -1455,22 +1580,30 @@
       <div class="eyebrow">Move 03 &middot; Release</div>
       <h2>Loosen the <span class="glyph">grip.</span></h2>
       <p class="lede">Now stop fighting the thoughts &mdash; not by suppressing them (you already know that backfires) but by <b>letting go of your grip</b> and letting them pass through.</p>
+      <div class="example-strip">
+        <span class="example-label"><svg class="icon" aria-hidden="true" focusable="false"><use href="#icon-hand"></use></svg>Everyday use</span>
+        <div class="example-list">
+          <div class="example-chip"><svg class="icon" aria-hidden="true" focusable="false"><use href="#icon-hand"></use></svg><div><b>When the replay starts:</b> "There is the thought again." Let it be present without taking the meeting.</div></div>
+          <div class="example-chip"><svg class="icon" aria-hidden="true" focusable="false"><use href="#icon-reply"></use></svg><div><b>Return phrase:</b> "I do not have to solve this now. Return."</div></div>
+        </div>
+      </div>
     </div>
     <div class="lens-grid">
       <div class="lens-card lens-practice">
-        <span class="lens-label">Practice</span>
+        <span class="lens-label ver-orig">Practice</span><span class="lens-label ver-upd"><svg class="icon" aria-hidden="true" focusable="false"><use href="#icon-book"></use></svg>Practice</span>
         <p>Thomas Keating's Centering Prayer is built on exactly this. You choose a "sacred word" &mdash; not a mantra to concentrate on, but a symbol of your <em style="font-style:normal;color:var(--cream)">consent</em> to God's presence. When you notice a thought has carried you off, you don't wrestle it; you return, ever so gently, to the word.</p>
         <p>He compressed the whole method to four: resist no thought, retain no thought, react to no thought, return ever-so-gently. The word isn't the point. The returning is.</p>
         <span class="cite">Keating, Open Mind, Open Heart · Contemplative Outreach</span>
       </div>
       <div class="lens-card lens-evidence">
-        <span class="lens-label">Evidence</span>
+        <span class="lens-label ver-orig">Evidence</span><span class="lens-label ver-upd"><svg class="icon" aria-hidden="true" focusable="false"><use href="#icon-microscope"></use></svg>Evidence</span>
         <p>This is the anti-suppression strategy in practice. Because trying not to think a thought amplifies it (Wegner), the workable move is non-engagement plus gentle redirection.</p>
-        <p>That same posture &mdash; noticing you've drifted and returning &mdash; is what down-regulates the default mode network in meditation studies (Brewer et al., 2011). You aren't emptying the mind; you're changing your relationship to its contents.</p>
+        <p>That same posture &mdash; noticing you have drifted and returning &mdash; is associated with lower activity in default-mode regions in meditation studies (Brewer et al., 2011). You are not emptying the mind; you are changing your relationship to its contents.</p>
         <span class="cite">Wegner 1994 (ironic process) · Brewer 2011</span>
       </div>
       <div class="lens-card lens-framework">
-        <span class="lens-label">Framework</span>
+        <span class="lens-label ver-orig">Framework</span>
+        <span class="lens-label ver-upd"><svg class="icon" aria-hidden="true" focusable="false"><use href="#icon-route"></use></svg>Framework</span>
         <p>Consent is the opposite posture to the wanting-loop. The loop says <em>grip, solve, secure.</em> Release says: I don't have to resolve this thought to be safe &mdash; I can let it go and rest in Presence. Every gentle return is a small renunciation of the counterfeit.</p>
       </div>
     </div>
@@ -1484,25 +1617,34 @@
       <div class="eyebrow">Move 04 &middot; Meet</div>
       <h2>Face what <span class="glyph">rises.</span></h2>
       <p class="lede">Sharper thoughts keep coming &mdash; the cravings, the accusations, the ones that won't just drift off. For these, the tradition hands you <b>two tools</b>, and they're opposites: let it pass, or cut it off.</p>
-      <div class="bridge">the desert called this nepsis. we call it urge surfing.</div>
+      <div class="bridge">the tradition calls this watchfulness. modern therapy has a cousin.</div>
+      <div class="choice-rule">
+        <div class="choice-item"><svg class="icon" aria-hidden="true" focusable="false"><use href="#icon-waves"></use></svg><div><b>Surf the urge</b><br>Use this for a craving, impulse, or emotional wave that will pass if you stop feeding it.</div></div>
+        <div class="choice-item"><svg class="icon" aria-hidden="true" focusable="false"><use href="#icon-reply"></use></svg><div><b>Talk back to the lie</b><br>Use this for an accusation or false story that needs truth, not passive waiting.</div></div>
+      </div>
+      <div class="terms-strip">
+        <div class="term-item"><svg class="icon" aria-hidden="true" focusable="false"><use href="#icon-tag"></use></svg><div><b>Logismoi</b><br>tempting thoughts, impulses, and inner arguments as they arrive.</div></div>
+        <div class="term-item"><svg class="icon" aria-hidden="true" focusable="false"><use href="#icon-hand"></use></svg><div><b>Nepsis</b><br>watchfulness at the threshold before a thought settles in.</div></div>
+      </div>
     </div>
 
     <div class="lens-grid">
       <div class="lens-card lens-practice">
-        <span class="lens-label">Practice &mdash; watch</span>
-        <p>The desert tradition called intrusive thoughts <em style="font-style:normal;color:var(--cream)">logismoi</em>, and the discipline of meeting them <em style="font-style:normal;color:var(--cream)">nepsis</em> &mdash; watchfulness at the threshold. Evagrius' line: it isn't in our power whether a thought arrives, only whether we let it linger.</p>
+        <span class="lens-label"><svg class="icon" aria-hidden="true" focusable="false"><use href="#icon-book"></use></svg>Practice &mdash; watch</span>
+        <p>The desert tradition called tempting thoughts, impulses, and inner arguments <em style="font-style:normal;color:var(--cream)">logismoi</em>, and the discipline of meeting them <em style="font-style:normal;color:var(--cream)">nepsis</em> &mdash; watchfulness at the threshold. Evagrius' line: it isn't in our power whether a thought arrives, only whether we let it linger.</p>
         <p>You catch it as it appears, name what it is, and decline to converse with it. Watch the wave rise, crest, and pass &mdash; without climbing on.</p>
         <span class="cite">Evagrius, Praktikos · The Philokalia</span>
       </div>
       <div class="lens-card lens-evidence">
-        <span class="lens-label">Evidence &mdash; surf</span>
-        <p>Alan Marlatt built "urge surfing" in the 1980s for addiction treatment &mdash; the image came from a client who surfed. A craving isn't permanent: it triggers, rises, peaks, and falls, usually in minutes. You ride it out instead of being wiped out.</p>
+        <span class="lens-label"><svg class="icon" aria-hidden="true" focusable="false"><use href="#icon-microscope"></use></svg>Evidence &mdash; surf</span>
+        <p>Alan Marlatt built "urge surfing" in the 1980s for addiction treatment &mdash; the image came from a client who surfed. Urges often move like waves: they trigger, rise, peak, and fall. Timing varies by person and situation; the practical training is to ride without obeying.</p>
         <p>It moved into DBT as "emotion surfing" (Linehan). What it trains is the space between stimulus and response &mdash; the pause where choice reappears.</p>
         <span class="cite">Marlatt &amp; Gordon · Bowen &amp; Marlatt, MBRP</span>
       </div>
       <div class="lens-card lens-framework">
-        <span class="lens-label">Framework</span>
-        <p>The craving-thought is the wanting-loop's sales pitch. Urge surfing is declining the offer <strong style="color:var(--cream);font-weight:600">without paying it the dopamine of engagement</strong> &mdash; you let the wanting crest and fall unrewarded, and the pattern weakens for next time.</p>
+        <span class="lens-label ver-orig">Framework</span>
+        <span class="lens-label ver-upd"><svg class="icon" aria-hidden="true" focusable="false"><use href="#icon-route"></use></svg>Framework</span>
+        <p>The craving-thought is the wanting-loop's sales pitch. Urge surfing is declining the offer without rewarding the pattern &mdash; you let the wanting crest and fall without turning it into action, and the habit has less reinforcement for next time.</p>
       </div>
     </div>
 
@@ -1531,19 +1673,20 @@
     <!-- second tool: talk back -->
     <div class="lens-grid" style="margin-top:1.3rem">
       <div class="lens-card lens-practice">
-        <span class="lens-label">Practice &mdash; talk back</span>
-        <p>The second desert tool is the reverse of surfing: instead of letting a thought pass, you <em style="font-style:normal;color:var(--cream)">counter</em> it. Evagrius wrote a whole manual, <span style="font-style:italic">Antirrhetikos</span> (&ldquo;Talking Back&rdquo;), pairing 500-plus tempting thoughts each with a Scripture that contradicts it.</p>
+        <span class="lens-label"><svg class="icon" aria-hidden="true" focusable="false"><use href="#icon-book"></use></svg>Practice &mdash; talk back</span>
+        <p>The second desert tool is the reverse of surfing: instead of letting a thought pass, you <em style="font-style:normal;color:var(--cream)">counter</em> it. Evagrius wrote a whole manual, <span style="font-style:italic">Antirrhetikos</span> (&ldquo;Talking Back&rdquo;), pairing hundreds of tempting thoughts each with a Scripture that contradicts it.</p>
         <p>His models were David turning the Psalms against his enemies, and Jesus answering the wilderness with <span style="font-style:italic">"It is written."</span> You cut the thought off early, before it sets.</p>
         <span class="cite">Evagrius, Antirrhetikos (Brakke trans.) · Luke 4</span>
       </div>
       <div class="lens-card lens-evidence">
-        <span class="lens-label">Evidence &mdash; the timing</span>
+        <span class="lens-label"><svg class="icon" aria-hidden="true" focusable="false"><use href="#icon-microscope"></use></svg>Evidence &mdash; the timing</span>
         <p>Both tools are early-intervention. Evagrius borrowed the Stoic idea of the "first movement" (<span style="font-style:italic">propatheia</span>) &mdash; the involuntary flicker before a thought becomes a settled passion. Catch it there and it's cheap to handle; let it root and it runs you.</p>
         <p>Which tool depends on the thought: a passing craving &rarr; <b style="color:var(--ember)">surf it</b>. A lie that needs correcting &rarr; <b style="color:var(--ember)">talk back</b>.</p>
         <span class="cite">Stoic propatheia via Evagrius · Brakke, 2009</span>
       </div>
       <div class="lens-card lens-framework">
-        <span class="lens-label">Framework</span>
+        <span class="lens-label ver-orig">Framework</span>
+        <span class="lens-label ver-upd"><svg class="icon" aria-hidden="true" focusable="false"><use href="#icon-route"></use></svg>Framework</span>
         <p>Talking back is naming the counterfeit out loud and re-anchoring to the true source. It's Jeremiah 2:13 enacted in real time &mdash; refusing the broken cistern, turning back to the spring of living water &mdash; one countered thought at a time.</p>
       </div>
     </div>
@@ -1556,23 +1699,37 @@
     <div class="move-head">
       <div class="eyebrow">Move 05 &middot; Return</div>
       <h2>Reposition on <span class="glyph">God.</span></h2>
-      <p class="lede">The last move isn't emptiness &mdash; it's <b>occupancy.</b> You give attention something true to rest on. Attention is single-channel: the stress loop can't run while you're genuinely holding an anchor.</p>
+      <p class="lede">The last move isn't emptiness &mdash; it's <b>occupancy.</b> You give attention something true to rest on. 
+      <span class="ver-orig">Attention is single-channel: the stress loop can't run while you're genuinely holding an anchor.</span>
+      <span class="ver-upd">Attention is limited; the stress loop has less room to dominate while you are genuinely holding an anchor.</span></p>
+      <div class="example-strip ver-upd">
+        <span class="example-label"><svg class="icon" aria-hidden="true" focusable="false"><use href="#icon-anchor"></use></svg>Everyday use</span>
+        <div class="example-list">
+          <div class="example-chip"><svg class="icon" aria-hidden="true" focusable="false"><use href="#icon-wind"></use></svg><div><b>Set a measure:</b> before email, on a commute, at the sink, or before sleep, pray ten slow breaths and stop there.</div></div>
+          <div class="example-chip"><svg class="icon" aria-hidden="true" focusable="false"><use href="#icon-anchor"></use></svg><div><b>Use a short anchor:</b> one line is enough. Name on the inhale, mercy on the exhale.</div></div>
+        </div>
+      </div>
     </div>
     <div class="lens-grid">
       <div class="lens-card lens-practice">
-        <span class="lens-label">Practice</span>
-        <p>The oldest form is the Jesus Prayer &mdash; <span style="font-style:italic">Lord Jesus Christ, Son of God, have mercy on me</span> &mdash; from the hesychast tradition, descended from the Psalter's <span style="font-style:italic">Kyrie eleison</span> and the tax collector's plea (Luke 18:13).</p>
+        <span class="lens-label ver-orig">Practice</span>
+        <span class="lens-label ver-upd"><svg class="icon" aria-hidden="true" focusable="false"><use href="#icon-book"></use></svg>Practice</span>
+        <p class="ver-orig">The oldest form is the Jesus Prayer &mdash; <span style="font-style:italic">Lord Jesus Christ, Son of God, have mercy on me</span> &mdash; from the hesychast tradition, descended from the Psalter's <span style="font-style:italic">Kyrie eleison</span> and the tax collector's plea (Luke 18:13).</p>
+        <p class="ver-upd">One durable Christian anchor is the Jesus Prayer &mdash; <span style="font-style:italic">Lord Jesus Christ, Son of God, have mercy on me</span> &mdash; from the hesychast tradition, echoing the Psalter's <span style="font-style:italic">Kyrie eleison</span> and the tax collector's plea (Luke 18:13).</p>
         <p>Pilgrims synced it to the breath: the Name on the inhale, the mercy on the exhale, until it prayed itself. This is breath prayer &mdash; one short line of Scripture, held slowly, riding the breath.</p>
         <span class="cite">The Way of a Pilgrim · The Philokalia</span>
       </div>
       <div class="lens-card lens-evidence">
-        <span class="lens-label">Evidence</span>
+        <span class="lens-label ver-orig">Evidence</span>
+        <span class="lens-label ver-upd"><svg class="icon" aria-hidden="true" focusable="false"><use href="#icon-microscope"></use></svg>Evidence</span>
         <p>This is Wegner's red Volkswagen: the group given something else to hold didn't rebound. Focused attention is a bottleneck &mdash; occupying it crowds the loop out.</p>
-        <p>Anchoring attention on breath or a phrase is the lever that quiets the DMN (Brewer, 2011), the same lever labeling and surfing pull. Slow breathing (~5&ndash;6 per minute) also nudges the nervous system toward rest via vagal tone.</p>
+        <p class="ver-orig">Anchoring attention on breath or a phrase is the lever that quiets the DMN (Brewer, 2011), the same lever labeling and surfing pull. Slow breathing (~5&ndash;6 per minute) also nudges the nervous system toward rest via vagal tone.</p>
+        <p class="ver-upd">Anchoring attention on breath or a phrase overlaps with the lever used in meditation studies (Brewer, 2011), the same return move labeling and surfing train. Slow breathing around 5&ndash;6 breaths per minute is associated with stronger respiratory sinus arrhythmia / heart-rate variability and reduced arousal.</p>
         <span class="cite">Wegner 1987 · Brewer 2011 · paced-breathing / HRV literature</span>
       </div>
       <div class="lens-card lens-framework">
-        <span class="lens-label">Framework</span>
+        <span class="lens-label ver-orig">Framework</span>
+        <span class="lens-label ver-upd"><svg class="icon" aria-hidden="true" focusable="false"><use href="#icon-route"></use></svg>Framework</span>
         <p>Repositioning is the ordered-loves framework enacted live. You're not just calming down &mdash; you're <strong style="color:var(--cream);font-weight:600">re-aiming desire at its true object.</strong> The breath prayer is a small liturgy of reattachment: wanting, finally pointed home.</p>
       </div>
     </div>
@@ -1604,24 +1761,23 @@
   <div class="wrap">
     <div class="eyebrow">The synthesis</div>
     <h2>One loop, quieted &mdash; five times over.</h2>
-    <p>Read together, the five moves are a single motion: from <strong>gripping counterfeit resolutions</strong> to <strong>resting in the true source.</strong> In the Subscription Model, a stress-thought is the <em>Offer</em>; engaging it is the <em>Altar</em> you keep returning to; the rut it wears is the <em>Mental Structure</em> &mdash; rumination. The sequence dismantles that machine at every stage: lower the input, hand off the complaint, release the grip, decline or counter the pitch, reattach.</p>
+    <p class="ver-orig">Read together, the five moves are a single motion: from gripping counterfeit resolutions to resting in the true source. In the Subscription Model, a stress-thought is the Offer; engaging it is the Altar you keep returning to; the rut it wears is the Mental Structure &mdash; rumination. The sequence dismantles that machine at every stage: lower the input, hand off the complaint, release the grip, decline or counter the pitch, reattach.</p>
+    <p class="ver-upd">Read together, the five moves are a single motion: from <strong>gripping counterfeit resolutions</strong> to <strong>resting in the true source.</strong> In the Subscription Model, a stress-thought is the <em>Offer</em>; engaging it is the <em>Altar</em> you keep returning to; the rut it wears is the <em>mental structure</em> &mdash; rumination. The sequence dismantles that machine at every stage: lower the input, hand off the complaint, release the grip, decline or counter the pitch, reattach.</p>
     <p class="pull">Not a technique for extracting a state from God &mdash; a way of clearing the noise until an already-present voice is audible.</p>
 
     <div class="acedia">
       <span class="tag">The failure mode &mdash; name it before it names you</span>
       <h3>Acedia: the noonday demon.</h3>
-      <p>The desert fathers' subtlest enemy wasn't lust or anger &mdash; it was <strong style="color:var(--cream);font-weight:600">acedia</strong>, the "noonday demon" of Psalm 91:6. Cassian's monk keeps glancing at the window, willing the sun to set, certain the hour will never end. It's the listless restlessness that drives you out of the cell and whispers <em style="font-style:normal;color:var(--cream-dim)">this is pointless, go do something else.</em></p>
-      <p>Evagrius' cure was almost stubbornly plain: <strong style="color:var(--cream);font-weight:600">perseverance.</strong> Set a measure for the work and don't let up until it's done. That's the modern condition exactly &mdash; the reflex to abandon quiet the second it turns boring and reach for the feed. The sequence only works if you stay past the point where acedia tells you to leave.</p>
+      <p>The desert fathers' subtlest enemy wasn't lust or anger &mdash; it was <strong style="color:var(--cream);font-weight:600">acedia</strong>, the "noonday demon" named in the Greek and Latin tradition of Psalm 90/91. Cassian's monk keeps glancing at the window, willing the sun to set, certain the hour will never end. It is the listless restlessness that drives you out of the cell and whispers <em style="font-style:normal;color:var(--cream-dim)">this is pointless, go do something else.</em></p>
+      <p>Evagrius' cure includes something almost stubbornly plain: <strong style="color:var(--cream);font-weight:600">perseverance.</strong> Stay, pray, keep the appointed measure. That fits the modern condition exactly &mdash; the reflex to abandon quiet the second it turns boring and reach for the feed. The sequence only works if you stay past the point where acedia tells you to leave.</p>
     </div>
 
     <p>Every move above is downstream of one refusal you keep making: the counterfeit says <em>solve it, hold it, feed it, leave.</em> The return says no &mdash; and turns.</p>
   </div>
 </section>
 
-</section>
-
 <!-- INTEGRATION: THEOLOGY & NEUROBIOLOGY -->
-<section class="move integration" id="integration">
+<section class="move integration ver-upd" id="integration">
   <div class="wrap">
     <div class="move-head">
       <div class="eyebrow">Integration &middot; Theology &amp; Neurobiology</div>
@@ -1648,19 +1804,19 @@
         <div class="lens-grid">
           <!-- PRACTICE -->
           <div class="lens-card lens-practice">
-            <span class="lens-label"><svg class="icon" aria-hidden="true" focusable="false"><use href="#icon-book"></use></svg>Practice</span>
+            <span class="lens-label ver-orig">Practice</span><span class="lens-label ver-upd"><svg class="icon" aria-hidden="true" focusable="false"><use href="#icon-book"></use></svg>Practice</span>
             <p><strong>Centering Prayer &amp; Sacred Words:</strong> Sitting in silent surrender, using a single word (e.g., <em>Abba</em>, <em>Silence</em>, <em>Jesus</em>) as a simple anchor. When thoughts arise, the practitioner doesn't engage them, but gently returns to the word to re-aim the will.</p>
             <span class="cite">The Cloud of Unknowing (14th Century)</span>
           </div>
           <!-- EVIDENCE -->
           <div class="lens-card lens-evidence">
-            <span class="lens-label"><svg class="icon" aria-hidden="true" focusable="false"><use href="#icon-microscope"></use></svg>Evidence</span>
+            <span class="lens-label ver-orig">Evidence</span><span class="lens-label ver-upd"><svg class="icon" aria-hidden="true" focusable="false"><use href="#icon-microscope"></use></svg>Evidence</span>
             <p><strong>DMN vs. TPN Activation:</strong> The Default Mode Network (mPFC, PCC, precuneus) handles self-talk and anxiety. Contemplative prayer deactivates these nodes while functional coupling increases between the prefrontal attention centers (dlPFC) and the PCC, training automated, non-judgmental executive monitoring.</p>
             <span class="cite">Brewer et al., PNAS (2011)</span>
           </div>
           <!-- FRAMEWORK -->
           <div class="lens-card lens-framework">
-            <span class="lens-label"><svg class="icon" aria-hidden="true" focusable="false"><use href="#icon-route"></use></svg>Framework</span>
+            <span class="lens-label ver-orig">Framework</span><span class="lens-label ver-upd"><svg class="icon" aria-hidden="true" focusable="false"><use href="#icon-route"></use></svg>Framework</span>
             <p><strong>The Apophatic Cloud:</strong> The hyperactive Default Mode Network is the neurobiological signature of the egoic "narrative self." Silent apophatic contemplation acts as a physiological "cloud of forgetting," quieting self-referential loops to open space for union with God.</p>
           </div>
         </div>
@@ -1718,19 +1874,19 @@
         <div class="lens-grid">
           <!-- PRACTICE -->
           <div class="lens-card lens-practice">
-            <span class="lens-label"><svg class="icon" aria-hidden="true" focusable="false"><use href="#icon-book"></use></svg>Practice</span>
+            <span class="lens-label ver-orig">Practice</span><span class="lens-label ver-upd"><svg class="icon" aria-hidden="true" focusable="false"><use href="#icon-book"></use></svg>Practice</span>
             <p><strong>Structured Liturgy &amp; Physical Postures:</strong> The physical rhythms of daily offices (Morning and Evening prayers, kneeling, chanting, breathing) convert spiritual intentions into repetitive muscular reflexes, bypassing cognitive hesitation.</p>
             <span class="cite">The Daily Office (Traditional Rhythms)</span>
           </div>
           <!-- EVIDENCE -->
           <div class="lens-card lens-evidence">
-            <span class="lens-label"><svg class="icon" aria-hidden="true" focusable="false"><use href="#icon-microscope"></use></svg>Evidence</span>
+            <span class="lens-label ver-orig">Evidence</span><span class="lens-label ver-upd"><svg class="icon" aria-hidden="true" focusable="false"><use href="#icon-microscope"></use></svg>Evidence</span>
             <p><strong>The Striatum &amp; Synaptic Myelination:</strong> Repeating an embodied sequence automates the action in the Basal Ganglia (dorsal striatum), grouping complex routines into single neurological commands. Repeated firing initiates myelin wrapping of synapses, speeding communication 100x.</p>
             <span class="cite">Hebb's Law &amp; Striatal Chunking</span>
           </div>
           <!-- FRAMEWORK -->
           <div class="lens-card lens-framework">
-            <span class="lens-label"><svg class="icon" aria-hidden="true" focusable="false"><use href="#icon-route"></use></svg>Framework</span>
+            <span class="lens-label ver-orig">Framework</span><span class="lens-label ver-upd"><svg class="icon" aria-hidden="true" focusable="false"><use href="#icon-route"></use></svg>Framework</span>
             <p><strong>The Liturgical Animal:</strong> We are shaped by whatever routines we physically practice. Traditional liturgies of faith act as physical counter-strategies, transferring theological truths from the fragile conscious prefrontal cortex into automatic striatal instincts.</p>
             <span class="cite">James K.A. Smith, Desiring the Kingdom</span>
           </div>
@@ -1797,19 +1953,19 @@
         <div class="lens-grid">
           <!-- PRACTICE -->
           <div class="lens-card lens-practice">
-            <span class="lens-label"><svg class="icon" aria-hidden="true" focusable="false"><use href="#icon-book"></use></svg>Practice</span>
+            <span class="lens-label ver-orig">Practice</span><span class="lens-label ver-upd"><svg class="icon" aria-hidden="true" focusable="false"><use href="#icon-book"></use></svg>Practice</span>
             <p><strong>Vocation &amp; Ignatian Discernment:</strong> Reviewing choices using rules for the discernment of spirits. Cultivating "spiritual consolation" (deep joy and peace) rather than "spiritual desolation" (fleeting validation followed by anxiety).</p>
             <span class="cite">St. Ignatius of Loyola, Spiritual Exercises</span>
           </div>
           <!-- EVIDENCE -->
           <div class="lens-card lens-evidence">
-            <span class="lens-label"><svg class="icon" aria-hidden="true" focusable="false"><use href="#icon-microscope"></use></svg>Evidence</span>
+            <span class="lens-label ver-orig">Evidence</span><span class="lens-label ver-upd"><svg class="icon" aria-hidden="true" focusable="false"><use href="#icon-microscope"></use></svg>Evidence</span>
             <p><strong>Dopaminergic SEEKING vs. Serotonin:</strong> The mesolimbic SEEKING system (VTA -> NAc) fuels the chase, not satisfaction. Reaching temporary goals results in dopamine drops (hedonic treadmill). Serotonergic tracks supply deep relational safety, balancing seeking with contentment.</p>
             <span class="cite">Panksepp, Affective Neuroscience (1998)</span>
           </div>
           <!-- FRAMEWORK -->
           <div class="lens-card lens-framework">
-            <span class="lens-label"><svg class="icon" aria-hidden="true" focusable="false"><use href="#icon-route"></use></svg>Framework</span>
+            <span class="lens-label ver-orig">Framework</span><span class="lens-label ver-upd"><svg class="icon" aria-hidden="true" focusable="false"><use href="#icon-route"></use></svg>Framework</span>
             <p><strong>The Restless Heart &amp; Theosis:</strong> The brain adapts structurally to all finite rewards, making permanent physical satisfaction impossible. The dopaminergic seeking pathway is built for the infinite. Vocation and <em>theosis</em> (union with God) satisfy this infinite seeking drive.</p>
             <span class="cite">Augustine of Hippo, Confessions</span>
           </div>
@@ -1867,19 +2023,19 @@
         <div class="lens-grid">
           <!-- PRACTICE -->
           <div class="lens-card lens-practice">
-            <span class="lens-label"><svg class="icon" aria-hidden="true" focusable="false"><use href="#icon-book"></use></svg>Practice</span>
+            <span class="lens-label ver-orig">Practice</span><span class="lens-label ver-upd"><svg class="icon" aria-hidden="true" focusable="false"><use href="#icon-book"></use></svg>Practice</span>
             <p><strong>Sabbath Keeping &amp; Eutrapelia:</strong> Actively halting commerce, tracking, and striving for a full 24 hours. Cultivating the virtue of <em>eutrapelia</em> (graceful, lighthearted play), reminding the mind that creation is a gift to be enjoyed, not exploited.</p>
             <span class="cite">The Sabbath Commandment · Eutrapelia Virtue</span>
           </div>
           <!-- EVIDENCE -->
           <div class="lens-card lens-evidence">
-            <span class="lens-label"><svg class="icon" aria-hidden="true" focusable="false"><use href="#icon-microscope"></use></svg>Evidence</span>
+            <span class="lens-label ver-orig">Evidence</span><span class="lens-label ver-upd"><svg class="icon" aria-hidden="true" focusable="false"><use href="#icon-microscope"></use></svg>Evidence</span>
             <p><strong>Subcortical PLAY Circuits &amp; BDNF:</strong> Perceived safety deactivates the threat response (fear/rage), allowing subcortical play pathways to fire. Play releases endorphins, decreases cortisol, and releases BDNF in the prefrontal cortex, promoting brain plasticity.</p>
             <span class="cite">Jaak Panksepp, Affective Neuroscience</span>
           </div>
           <!-- FRAMEWORK -->
           <div class="lens-card lens-framework">
-            <span class="lens-label"><svg class="icon" aria-hidden="true" focusable="false"><use href="#icon-route"></use></svg>Framework</span>
+            <span class="lens-label ver-orig">Framework</span><span class="lens-label ver-upd"><svg class="icon" aria-hidden="true" focusable="false"><use href="#icon-route"></use></svg>Framework</span>
             <p><strong>The Sanctuary in Time:</strong> Sabbath is the liturgical activation of safety circuits. By halting survival efforts, we establish a weekly sanctuary where the brain moves from threat management to relational joy. Creation is experienced as play, not raw material.</p>
             <span class="cite">Abraham Joshua Heschel, The Sabbath</span>
           </div>
@@ -1927,13 +2083,20 @@
   <div class="wrap">
     <div class="eyebrow">Where the evidence runs, and where it stops</div>
     <h2>Honest edges.</h2>
-    <div class="cav-list">
+    <div class="cav-list ver-orig">
       <div class="cav-item"><span class="m">&mdash;</span><div><b>The science maps mechanisms, not the prayers.</b> Affect labeling, ironic process, and DMN activity are robust and replicated. But Centering Prayer and the Jesus Prayer haven't been trialed the way MBSR / MBCT have. The claim is mechanistic &mdash; same attentional lever, different object &mdash; not "prayer X is clinically proven."</div></div>
       <div class="cav-item"><span class="m">&mdash;</span><div><b>Nepsis and urge surfing is a parallel, not a lineage.</b> The resemblance is real and noted by scholars, but Marlatt built urge surfing from a surfer client &mdash; there's no evidence he drew on Evagrius. Convergent, not derived.</div></div>
       <div class="cav-item"><span class="m">&mdash;</span><div><b>"The space between stimulus and response"</b> is widely attributed to Viktor Frankl but doesn't appear verbatim in his published work. Treat it as folk-Frankl, not a citation.</div></div>
       <div class="cav-item"><span class="m">&mdash;</span><div><b>Specific neuro-figures vary by source.</b> Some popular claims (e.g. exact DMN energy budgets) I've left out; the statements above stay at the level the primary studies support.</div></div>
       <div class="cav-item"><span class="m">&mdash;</span><div><b>One bilingual note</b> &mdash; relevant if you pray across two languages: labeling an emotion in a non-native language may not down-regulate the amygdala as well (Torre &amp; Lieberman line of work). The mother tongue may carry more of the load.</div></div>
       <div class="cav-item"><span class="m">&mdash;</span><div><b>This is a map, not the territory.</b> For clinical anxiety, trauma, or depression, these practices sit <em style="font-style:normal;color:var(--cream)">alongside</em> professional care, not instead of it.</div></div>
+    </div>
+    <div class="cav-list ver-upd">
+      <div class="cav-item"><span class="m"><svg class="icon" aria-hidden="true" focusable="false"><use href="#icon-alert"></use></svg></span><div><b>The science maps mechanisms, not the prayers.</b> Affect labeling, ironic process, and DMN findings support claims about attention and emotion. They do not prove that a specific prayer is a clinical treatment.</div></div>
+      <div class="cav-item"><span class="m"><svg class="icon" aria-hidden="true" focusable="false"><use href="#icon-alert"></use></svg></span><div><b>Nepsis and urge surfing are a parallel, not a lineage.</b> The resemblance is real and useful, but Marlatt built urge surfing from a surfer client. Convergent, not derived.</div></div>
+      <div class="cav-item"><span class="m"><svg class="icon" aria-hidden="true" focusable="false"><use href="#icon-alert"></use></svg></span><div><b>"The space between stimulus and response"</b> is widely attributed to Viktor Frankl but does not appear verbatim in his published work. Treat it as folk-Frankl, not a citation.</div></div>
+      <div class="cav-item"><span class="m"><svg class="icon" aria-hidden="true" focusable="false"><use href="#icon-alert"></use></svg></span><div><b>Specific neuro-figures vary by source.</b> Popular claims about exact DMN percentages and energy budgets can outrun the data. The statements above stay at the level the cited work supports.</div></div>
+      <div class="cav-item"><span class="m"><svg class="icon" aria-hidden="true" focusable="false"><use href="#icon-alert"></use></svg></span><div><b>This is a map, not the territory.</b> For clinical anxiety, trauma, addiction, or depression, these practices sit <em style="font-style:normal;color:var(--cream)">alongside</em> professional care, not instead of it.</div></div>
     </div>
   </div>
 </section>
@@ -1942,7 +2105,7 @@
 <section class="sources">
   <div class="wrap">
     <h2>Sources</h2>
-    <div class="src-grid">
+    <div class="src-grid ver-orig">
       <p><b>Lieberman et al. (2007)</b> — Putting Feelings Into Words. Psychological Science.</p>
       <p><b>Wegner et al. (1987); Wegner (1994)</b> — Paradoxical effects of thought suppression; ironic process theory.</p>
       <p><b>Marlatt &amp; Gordon; Bowen &amp; Marlatt</b> — Relapse Prevention; Mindfulness-Based Relapse Prevention.</p>
@@ -1952,6 +2115,18 @@
       <p><b>The Way of a Pilgrim</b> — the Jesus Prayer tradition.</p>
       <p><b>Killingsworth &amp; Gilbert (2010)</b> — A wandering mind is an unhappy mind. Science.</p>
       <p><b>Raichle et al. (2001); Brewer et al. (2011)</b> — the default mode network; meditation &amp; DMN. PNAS.</p>
+      <p><b>Nouwen</b> — The Way of the Heart. Cassian, Conferences (on acedia).</p>
+    </div>
+    <div class="src-grid ver-upd">
+      <p><b>Lieberman et al. (2007)</b> — <a href="https://doi.org/10.1111/j.1467-9280.2007.01916.x">Putting Feelings Into Words</a>. Psychological Science.</p>
+      <p><b>Wegner et al. (1987); Wegner (1994)</b> — <a href="https://doi.org/10.1037/0022-3514.53.1.5">Paradoxical effects of thought suppression</a>; ironic process theory.</p>
+      <p><b>Marlatt &amp; Gordon; Bowen &amp; Marlatt</b> — Relapse Prevention; Mindfulness-Based Relapse Prevention.</p>
+      <p><b>Keating</b> — Open Mind, Open Heart; Invitation to Love. <a href="https://www.contemplativeoutreach.org/centering-prayer-method/">Contemplative Outreach method</a>.</p>
+      <p><b>Evagrius Ponticus</b> — Praktikos; Antirrhetikos ("Talking Back"), trans. David Brakke (2009).</p>
+      <p><b>The Philokalia</b> — Palmer, Sherrard &amp; Ware (trans.).</p>
+      <p><b>The Way of a Pilgrim</b> — the Jesus Prayer tradition.</p>
+      <p><b>Killingsworth &amp; Gilbert (2010)</b> — <a href="https://doi.org/10.1126/science.1192439">A wandering mind is an unhappy mind</a>. Science.</p>
+      <p><b>Raichle et al. (2001); Brewer et al. (2011)</b> — default mode network; <a href="https://www.pnas.org/doi/10.1073/pnas.1112029108">meditation &amp; DMN</a>. PNAS.</p>
       <p><b>Nouwen</b> — The Way of the Heart. Cassian, Conferences (on acedia).</p>
     </div>
   </div>
@@ -2544,6 +2719,56 @@
         cardBox.style.borderColor = 'rgba(167, 203, 105, 0.4)';
         cardBox.style.background = 'color-mix(in srgb, var(--raise-2) 93%, rgba(167, 203, 105, 0.08))';
       }
+    });
+  }
+})();
+
+// --- In-Place Version Toggle Logic ---
+(function(){
+  const toggleBtn = document.getElementById('versionToggle');
+  if (toggleBtn) {
+    // Determine initial state based on path or localStorage
+    const isNewPath = window.location.pathname.includes('/new/') || window.location.pathname.endsWith('/new') || window.location.hash === '#new';
+    
+    // Default to true (original) for root path, false (updated) for /new/ path
+    let defaultOriginal = !isNewPath;
+    
+    // Check saved state from localStorage if present
+    const savedOriginal = localStorage.getItem('returnVersionOriginal');
+    let isOriginal = defaultOriginal;
+    if (savedOriginal !== null) {
+      // Respect navigation path primarily, but fallback to saved state if they just clicked toggle
+      isOriginal = savedOriginal === 'true';
+      if (isNewPath) {
+        isOriginal = false; // Always updated on /new/ page initial load
+      }
+    }
+    
+    function setVersion(orig) {
+      if (orig) {
+        document.documentElement.classList.add('show-original');
+        toggleBtn.textContent = 'Switch to Updated Version';
+        localStorage.setItem('returnVersionOriginal', 'true');
+        // Update URL hash without reload to reflect version
+        if (window.location.hash !== '#original') {
+          history.replaceState(null, null, ' ' + window.location.pathname + '#original');
+        }
+      } else {
+        document.documentElement.classList.remove('show-original');
+        toggleBtn.textContent = 'Switch to Original Version';
+        localStorage.setItem('returnVersionOriginal', 'false');
+        if (window.location.hash !== '#new') {
+          history.replaceState(null, null, ' ' + window.location.pathname + '#new');
+        }
+      }
+    }
+    
+    setVersion(isOriginal);
+    
+    toggleBtn.addEventListener('click', (e) => {
+      e.preventDefault();
+      const currentState = document.documentElement.classList.contains('show-original');
+      setVersion(!currentState);
     });
   }
 })();
