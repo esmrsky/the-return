@@ -459,17 +459,24 @@
   }
   .hero-orb{
     position:absolute;
-    right:-14vw;top:50%;transform:translateY(-50%);
-    width:min(62vw,44rem);height:min(62vw,44rem);
-    border-radius:50%;
-    background:radial-gradient(circle at 42% 40%, var(--ember-glow), rgba(var(--accent-rgb),.04) 45%, transparent 68%);
-    filter:blur(6px);
-    animation:breathe 11s ease-in-out infinite;
+    right:-24vw;top:50%;transform:translateY(-50%) rotate(-8deg);
+    width:min(86vw,62rem);height:min(70vw,48rem);
+    border-radius:38% 62% 58% 42% / 42% 45% 55% 58%;
+    background:
+      radial-gradient(circle at 28% 34%, rgba(var(--accent-rgb),.34), transparent 32%),
+      radial-gradient(circle at 74% 27%, rgba(255,248,237,.12), transparent 34%),
+      radial-gradient(circle at 58% 74%, rgba(var(--accent-rgb),.18), transparent 38%),
+      conic-gradient(from 155deg at 52% 50%, rgba(var(--accent-rgb),.05), rgba(var(--accent-rgb),.28), rgba(255,248,237,.08), rgba(var(--accent-rgb),.16), rgba(var(--accent-rgb),.05));
+    filter:blur(26px) saturate(1.18);
+    opacity:.86;
+    -webkit-mask-image:radial-gradient(ellipse at 50% 50%, #000 0 48%, rgba(0,0,0,.78) 62%, transparent 82%);
+    mask-image:radial-gradient(ellipse at 50% 50%, #000 0 48%, rgba(0,0,0,.78) 62%, transparent 82%);
+    animation:breathe 14s ease-in-out infinite;
     pointer-events:none;z-index:0;
   }
   @keyframes breathe{
-    0%,100%{transform:translateY(-50%) scale(.82);opacity:.7}
-    50%{transform:translateY(-50%) scale(1.05);opacity:1}
+    0%,100%{transform:translateY(-50%) rotate(-8deg) scale(.96);opacity:.72}
+    50%{transform:translateY(-50%) rotate(-3deg) scale(1.04);opacity:.94}
   }
   .hero .wrap{position:relative;z-index:1;width:100%}
   .hero h1{
@@ -650,7 +657,7 @@
     border-radius:10px;padding:1.8rem 1.6rem 1.6rem;
   }
   .interactive .int-label{font-family:var(--label);font-size:.68rem;letter-spacing:.2em;text-transform:uppercase;color:var(--ember);margin-bottom:1.4rem;display:block}
-  .wave-frame{position:relative;width:100%}
+  .wave-frame{position:relative;width:100%;padding-bottom:.65rem}
   .wave-frame svg{display:block;width:100%;height:auto;overflow:visible}
   .wave-path-bg{fill:none;stroke:var(--hair-2);stroke-width:1.5}
   .wave-path{fill:none;stroke:var(--ember);stroke-width:2.5;stroke-linecap:round}
@@ -660,9 +667,10 @@
   .wave-stage{
     position:absolute;transform:translate(-50%,0);
     font-family:var(--label);font-size:.66rem;letter-spacing:.12em;text-transform:uppercase;
-    color:var(--cream-faint);opacity:.35;transition:all .35s ease;text-align:center;white-space:nowrap;
+    color:var(--cream-faint);opacity:.35;transition:all .45s ease;text-align:center;white-space:nowrap;
+    line-height:1;padding:.16rem .24rem;border-radius:999px;background:var(--raise);
   }
-  .wave-stage.on{opacity:1;color:var(--ember)}
+  .wave-stage.on{opacity:1;color:var(--ember);background:var(--ember-tint)}
   .wave-controls{display:flex;flex-wrap:wrap;align-items:center;gap:.9rem;margin-top:1.6rem}
   .wave-status{font-family:var(--label);font-size:.78rem;color:var(--cream-dim);min-width:12rem}
   .wave-status b{color:var(--ember);font-weight:500}
@@ -693,14 +701,22 @@
   }
   .breath-cue{
     font-family:var(--label);font-size:.72rem;letter-spacing:.24em;text-transform:uppercase;
-    color:var(--ember);height:1rem;transition:opacity .5s ease;margin-bottom:.2rem;
+    color:var(--ember);min-height:1.35rem;line-height:1.2;transition:opacity .5s ease;margin-bottom:.2rem;
   }
   .breath-controls{display:flex;flex-wrap:wrap;justify-content:center;align-items:center;gap:.9rem;margin-top:2rem}
   .breath-select{
     font-family:var(--label);font-size:.74rem;letter-spacing:.06em;
-    background:transparent;color:var(--cream);border:1px solid var(--hair-2);
-    padding:.6rem .9rem;border-radius:100px;cursor:pointer;
+    -webkit-appearance:none;appearance:none;max-width:100%;min-height:2.35rem;
+    background-color:transparent;
+    background-image:
+      linear-gradient(45deg,transparent 50%,var(--ember) 50%),
+      linear-gradient(135deg,var(--ember) 50%,transparent 50%);
+    background-position:calc(100% - 1.32rem) calc(50% + .04rem),calc(100% - 1.08rem) calc(50% + .04rem);
+    background-size:.32rem .32rem,.32rem .32rem;background-repeat:no-repeat;
+    color:var(--cream);border:1px solid var(--hair-2);
+    padding:.62rem 2.45rem .62rem 1rem;border-radius:100px;cursor:pointer;
   }
+  .breath-select option{background:var(--ink);color:var(--cream)}
   .breath-select:focus-visible{outline:2px solid var(--ember);outline-offset:2px}
   .breath-count{font-family:var(--label);font-size:.74rem;color:var(--cream-faint);letter-spacing:.1em}
   .breath-count b{color:var(--cream);font-weight:500}
@@ -767,8 +783,8 @@
     .custom-panel{left:0;right:0;justify-content:center}
     .custom-panel input[type="number"]{width:2.85rem}
     #st-rise,#st-fall{display:none}
-    #st-trigger{left:10% !important;top:86% !important}
-    #st-peak{top:-2% !important}
+    #st-trigger{left:12% !important;top:88% !important}
+    #st-peak{top:-1% !important}
     .wave-status{min-width:100%;line-height:1.6}
   }
 
@@ -1080,10 +1096,10 @@
           <circle class="wave-marker-halo" id="waveHalo" r="11" cx="0" cy="170" style="opacity:0"></circle>
           <circle class="wave-marker" id="waveDot" r="5" cx="0" cy="170" style="opacity:0"></circle>
         </svg>
-        <div class="wave-stage" id="st-trigger" style="left:6%;top:80%">Trigger</div>
-        <div class="wave-stage" id="st-rise" style="left:33%;top:44%">Rise</div>
+        <div class="wave-stage" id="st-trigger" style="left:8%;top:86%">Trigger</div>
+        <div class="wave-stage" id="st-rise" style="left:32%;top:42%">Rise</div>
         <div class="wave-stage" id="st-peak" style="left:50%;top:1%">Peak</div>
-        <div class="wave-stage" id="st-fall" style="left:70%;top:44%">Fall</div>
+        <div class="wave-stage" id="st-fall" style="left:72%;top:42%">Fall</div>
       </div>
       <div class="wave-controls">
         <button class="btn primary" id="waveGo">A craving arrives</button>
@@ -1526,7 +1542,7 @@
       return;
     }
 
-    var dur = 3400, t0 = null;
+    var dur = 8600, t0 = null;
     function frame(ts){
       if(!t0) t0 = ts;
       var p = Math.min((ts - t0)/dur, 1);
@@ -1536,9 +1552,9 @@
       dot.setAttribute('cx', pt.x); dot.setAttribute('cy', pt.y);
       halo.setAttribute('cx', pt.x); halo.setAttribute('cy', pt.y);
       setStages(pt.x);
-      if(pt.y < baseY - amp*0.5 && p < 0.55){ setWaveStatus('Rising \u2014 stay with it, don\u2019t climb on.'); }
-      if(p >= 0.45 && p < 0.62){ setWaveStatus('Peak. This is the hardest second. It won\u2019t hold.'); }
-      if(p >= 0.62 && p < 1){ setWaveStatus('Falling on its own \u2014 unfed, it fades.'); }
+      if(p >= 0.18 && p < 0.43){ setWaveStatus('Rising \u2014 stay with it, don\u2019t climb on.'); }
+      if(p >= 0.43 && p < 0.68){ setWaveStatus('Peak. This is the hardest stretch. It won\u2019t hold.'); }
+      if(p >= 0.68 && p < 1){ setWaveStatus('Falling on its own \u2014 unfed, it fades.'); }
       if(p < 1){ requestAnimationFrame(frame); }
       else {
         setWaveStatus('<b>&hellip;and it passed.</b> You didn\u2019t have to act on it.');
