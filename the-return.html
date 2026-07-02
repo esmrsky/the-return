@@ -2751,14 +2751,14 @@
         localStorage.setItem('returnVersionOriginal', 'true');
         // Update URL hash without reload to reflect version
         if (window.location.hash !== '#original') {
-          history.replaceState(null, null, ' ' + window.location.pathname + '#original');
+          history.replaceState(null, null, window.location.pathname + '#original');
         }
       } else {
         document.documentElement.classList.remove('show-original');
         toggleBtn.textContent = 'Switch to Original Version';
         localStorage.setItem('returnVersionOriginal', 'false');
         if (window.location.hash !== '#new') {
-          history.replaceState(null, null, ' ' + window.location.pathname + '#new');
+          history.replaceState(null, null, window.location.pathname + '#new');
         }
       }
     }
