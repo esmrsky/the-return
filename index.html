@@ -406,8 +406,8 @@
     backdrop-filter:blur(14px);-webkit-backdrop-filter:blur(14px);
   }
   .customizer-shell{
-    position:fixed;top:1rem;right:1rem;z-index:180;
-    display:flex;flex-direction:column;align-items:flex-end;gap:.55rem;
+    position:fixed;bottom:1rem;right:1rem;z-index:180;
+    display:flex;flex-direction:column-reverse;align-items:flex-end;gap:.55rem;
   }
   .customizer-toggle{
     width:2.35rem;height:2.35rem;border-radius:999px;border:1px solid var(--hair-2);
@@ -460,7 +460,7 @@
   .mode-switch input:checked + .switch-ui span{transform:translate(1rem,-50%)}
   .mode-switch input:checked + .switch-ui{background:var(--raise-2)}
   .custom-panel{
-    position:absolute;right:0;top:calc(100% + .45rem);display:none;align-items:center;gap:.5rem;
+    position:absolute;right:0;bottom:calc(100% + .45rem);display:none;align-items:center;gap:.5rem;
     padding:.55rem;background:var(--raise);border:1px solid var(--hair-2);border-radius:8px;
     box-shadow:0 18px 50px rgba(0,0,0,.18);font-family:var(--label);color:var(--cream-dim);
   }
@@ -831,7 +831,7 @@
       justify-content:space-between;gap:.35rem;overflow:visible;
       max-width:calc(100vw - 1.5rem);
     }
-    .customizer-shell{top:.75rem;right:.75rem}
+    .customizer-shell{bottom:.75rem;right:.75rem;top:auto}
     .theme-choices{min-width:0;overflow-x:auto}
     .theme-choice{font-size:.58rem;padding:.2rem .34rem;gap:.28rem}
     .mode-switch{font-size:.58rem;padding:0 .34rem;gap:.34rem}
