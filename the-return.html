@@ -18,6 +18,7 @@
     try{
       var savedDirection = localStorage.getItem('returnDirectionV2');
       var savedMode = localStorage.getItem('returnMode');
+      if(savedDirection === 'spotify') savedDirection = 'green';
       if(savedDirection) document.documentElement.dataset.direction = savedDirection;
       if(savedMode) document.documentElement.dataset.mode = savedMode;
     }catch(e){}
@@ -118,7 +119,7 @@
     --surface-hover:rgba(20,32,25,.05);
   }
 
-  html[data-direction="spotify"][data-mode="dark"]{
+  html[data-direction="green"][data-mode="dark"]{
     --ink:#07120B;
     --raise:#0E1C12;
     --raise-2:#142A19;
@@ -137,7 +138,7 @@
     --selection-fg:#06110A;
   }
 
-  html[data-direction="spotify"][data-mode="light"]{
+  html[data-direction="green"][data-mode="light"]{
     --ink:#F1FFF5;
     --raise:#FFFFFF;
     --raise-2:#DFF4E6;
@@ -158,42 +159,42 @@
   }
 
   html[data-direction="blue"][data-mode="dark"]{
-    --ink:#091116;
-    --raise:#101A21;
-    --raise-2:#16252E;
-    --cream:#EAF2F3;
-    --cream-dim:rgba(234,242,243,.68);
-    --cream-faint:rgba(234,242,243,.56);
-    --hair:rgba(234,242,243,.12);
-    --hair-2:rgba(234,242,243,.22);
-    --ember:#67C7BA;
-    --accent-rgb:103,199,186;
-    --ember-dim:rgba(103,199,186,.56);
-    --ember-tint:rgba(103,199,186,.08);
-    --ember-glow:rgba(103,199,186,.22);
-    --ember-hot:#81DBCD;
-    --accent-contrast:#061113;
-    --selection-fg:#061113;
+    --ink:#07111B;
+    --raise:#0E1824;
+    --raise-2:#142236;
+    --cream:#EEF6FF;
+    --cream-dim:rgba(238,246,255,.69);
+    --cream-faint:rgba(238,246,255,.57);
+    --hair:rgba(238,246,255,.12);
+    --hair-2:rgba(238,246,255,.22);
+    --ember:#0A81FF;
+    --accent-rgb:10,129,255;
+    --ember-dim:rgba(10,129,255,.58);
+    --ember-tint:rgba(10,129,255,.09);
+    --ember-glow:rgba(10,129,255,.26);
+    --ember-hot:#39A0FF;
+    --accent-contrast:#06111E;
+    --selection-fg:#06111E;
   }
 
   html[data-direction="blue"][data-mode="light"]{
-    --ink:#F2F9F8;
+    --ink:#F4F9FF;
     --raise:#FFFFFF;
-    --raise-2:#E3F0EF;
-    --cream:#102126;
-    --cream-dim:rgba(16,33,38,.72);
-    --cream-faint:rgba(16,33,38,.58);
-    --hair:rgba(16,33,38,.13);
-    --hair-2:rgba(16,33,38,.23);
-    --ember:#1F7480;
-    --accent-rgb:31,116,128;
-    --ember-dim:rgba(31,116,128,.58);
-    --ember-tint:rgba(31,116,128,.10);
-    --ember-glow:rgba(31,116,128,.18);
-    --ember-hot:#195F69;
-    --accent-contrast:#F7FFFF;
-    --selection-fg:#F7FFFF;
-    --surface-hover:rgba(16,33,38,.05);
+    --raise-2:#E3EFFB;
+    --cream:#102033;
+    --cream-dim:rgba(16,32,51,.72);
+    --cream-faint:rgba(16,32,51,.58);
+    --hair:rgba(16,32,51,.13);
+    --hair-2:rgba(16,32,51,.23);
+    --ember:#006DD9;
+    --accent-rgb:0,109,217;
+    --ember-dim:rgba(0,109,217,.58);
+    --ember-tint:rgba(10,129,255,.10);
+    --ember-glow:rgba(10,129,255,.18);
+    --ember-hot:#005CBA;
+    --accent-contrast:#F8FBFF;
+    --selection-fg:#F8FBFF;
+    --surface-hover:rgba(16,32,51,.05);
   }
 
   html[data-direction="cobalt"][data-mode="dark"]{
@@ -275,42 +276,42 @@
   }
 
   html[data-direction="red"][data-mode="dark"]{
-    --ink:#170A10;
-    --raise:#241018;
-    --raise-2:#321722;
-    --cream:#F9ECF0;
-    --cream-dim:rgba(249,236,240,.70);
-    --cream-faint:rgba(249,236,240,.58);
-    --hair:rgba(249,236,240,.13);
-    --hair-2:rgba(249,236,240,.23);
-    --ember:#FF2D55;
-    --accent-rgb:255,45,85;
-    --ember-dim:rgba(255,45,85,.58);
-    --ember-tint:rgba(255,45,85,.09);
-    --ember-glow:rgba(255,45,85,.24);
-    --ember-hot:#FF5375;
-    --accent-contrast:#16070E;
-    --selection-fg:#16070E;
+    --ink:#0E0D0B;
+    --raise:#17140D;
+    --raise-2:#1E1A11;
+    --cream:#F2EBDC;
+    --cream-dim:rgba(242,235,220,.66);
+    --cream-faint:rgba(242,235,220,.56);
+    --hair:rgba(242,235,220,.12);
+    --hair-2:rgba(242,235,220,.20);
+    --ember:#FA0000;
+    --accent-rgb:250,0,0;
+    --ember-dim:rgba(250,0,0,.58);
+    --ember-tint:rgba(250,0,0,.07);
+    --ember-glow:rgba(250,0,0,.18);
+    --ember-hot:#FF3030;
+    --accent-contrast:#0E0D0B;
+    --selection-fg:#0E0D0B;
   }
 
   html[data-direction="red"][data-mode="light"]{
-    --ink:#FFF3F6;
+    --ink:#FBF4E8;
     --raise:#FFFFFF;
-    --raise-2:#F6E0E8;
-    --cream:#2A121B;
-    --cream-dim:rgba(42,18,27,.72);
-    --cream-faint:rgba(42,18,27,.58);
-    --hair:rgba(42,18,27,.13);
-    --hair-2:rgba(42,18,27,.23);
-    --ember:#C20D4B;
-    --accent-rgb:194,13,75;
-    --ember-dim:rgba(194,13,75,.58);
-    --ember-tint:rgba(194,13,75,.10);
-    --ember-glow:rgba(194,13,75,.18);
-    --ember-hot:#A80B41;
-    --accent-contrast:#FFF7FA;
-    --selection-fg:#FFF7FA;
-    --surface-hover:rgba(42,18,27,.05);
+    --raise-2:#EFE6D6;
+    --cream:#0E0D0B;
+    --cream-dim:rgba(14,13,11,.68);
+    --cream-faint:rgba(14,13,11,.56);
+    --hair:rgba(14,13,11,.12);
+    --hair-2:rgba(14,13,11,.20);
+    --ember:#D00000;
+    --accent-rgb:208,0,0;
+    --ember-dim:rgba(208,0,0,.58);
+    --ember-tint:rgba(250,0,0,.07);
+    --ember-glow:rgba(250,0,0,.16);
+    --ember-hot:#FA0000;
+    --accent-contrast:#FFF8ED;
+    --selection-fg:#FFF8ED;
+    --surface-hover:rgba(14,13,11,.05);
   }
 
   html[data-direction="custom"][data-mode="dark"]{
@@ -402,11 +403,11 @@
   }
   .theme-choice[data-direction-choice="laurel"]{--swatch-accent:#A7CB69}
   .theme-choice[data-direction-choice="ember"]{--swatch-accent:#F3651C}
-  .theme-choice[data-direction-choice="spotify"]{--swatch-accent:#1ED760}
-  .theme-choice[data-direction-choice="blue"]{--swatch-accent:#67C7BA}
+  .theme-choice[data-direction-choice="green"]{--swatch-accent:#1ED760}
+  .theme-choice[data-direction-choice="blue"]{--swatch-accent:#0A81FF}
   .theme-choice[data-direction-choice="cobalt"]{--swatch-accent:#7EA0FF}
   .theme-choice[data-direction-choice="purple"]{--swatch-accent:#B99CFF}
-  .theme-choice[data-direction-choice="red"]{--swatch-accent:#FF2D55}
+  .theme-choice[data-direction-choice="red"]{--swatch-accent:#FA0000}
   .theme-choice[data-direction-choice="custom"]{--swatch-accent:#1ED760}
   .mode-switch{
     display:inline-flex;align-items:center;gap:.45rem;height:2rem;padding:0 .5rem;
@@ -844,8 +845,8 @@
     <button class="theme-choice" type="button" data-direction-choice="ember" aria-pressed="false" aria-label="Ember design direction" title="Ember Orange">
       <span class="theme-swatch" aria-hidden="true"></span><span>Ember</span>
     </button>
-    <button class="theme-choice" type="button" data-direction-choice="spotify" aria-pressed="false" aria-label="Spotify green design direction" title="Spotify Green">
-      <span class="theme-swatch" aria-hidden="true"></span><span>Spotify</span>
+    <button class="theme-choice" type="button" data-direction-choice="green" aria-pressed="false" aria-label="Green design direction" title="Green">
+      <span class="theme-swatch" aria-hidden="true"></span><span>Green</span>
     </button>
     <button class="theme-choice" type="button" data-direction-choice="blue" aria-pressed="false" aria-label="Blue design direction" title="Blue">
       <span class="theme-swatch" aria-hidden="true"></span><span>Blue</span>
@@ -1257,11 +1258,11 @@
   var themeColors = {
     ember: { dark:'#0E0D0B', light:'#FBF4E8' },
     laurel: { dark:'#0B1210', light:'#F4F8F0' },
-    spotify: { dark:'#07120B', light:'#F1FFF5' },
-    blue: { dark:'#091116', light:'#F2F9F8' },
+    green: { dark:'#07120B', light:'#F1FFF5' },
+    blue: { dark:'#07111B', light:'#F4F9FF' },
     cobalt: { dark:'#0A1020', light:'#F4F6FF' },
     purple: { dark:'#120F1A', light:'#F8F4FC' },
-    red: { dark:'#170A10', light:'#FFF3F6' },
+    red: { dark:'#0E0D0B', light:'#FBF4E8' },
     custom: { dark:'#0E0D0B', light:'#FBF4E8' }
   };
   var validDirections = Object.keys(themeColors);
@@ -1372,6 +1373,7 @@
   }
 
   function setAppearance(direction, mode){
+    if(direction === 'spotify') direction = 'green';
     if(validDirections.indexOf(direction) === -1) direction = 'laurel';
     if(mode !== 'light' && mode !== 'dark') mode = 'dark';
     root.dataset.direction = direction;
