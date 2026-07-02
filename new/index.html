@@ -851,6 +851,376 @@
     .wave-status{min-width:100%;line-height:1.6}
   }
 
+  /* ---------- Integration Section ---------- */
+  .integration{
+    padding:6.5rem 0 3rem;
+    border-top:1px solid var(--hair);
+  }
+  .tabs-nav{
+    display:flex;
+    flex-wrap:wrap;
+    gap:.65rem;
+    margin:2.5rem 0;
+    border-bottom:1px solid var(--hair-2);
+    padding-bottom:1rem;
+  }
+  .tab-btn{
+    background:var(--raise);
+    background:color-mix(in srgb,var(--raise) 92%,transparent);
+    border:1px solid var(--hair-2);
+    border-radius:100px;
+    color:var(--cream-dim);
+    font-family:var(--label);
+    font-size:.7rem;
+    letter-spacing:.08em;
+    text-transform:uppercase;
+    padding:.45rem 1.1rem;
+    cursor:pointer;
+    transition:all .2s ease;
+  }
+  .tab-btn:hover{
+    color:var(--cream);
+    border-color:var(--cream-faint);
+  }
+  .tab-btn.active{
+    background:var(--ember-tint);
+    border-color:var(--ember-dim);
+    color:var(--ember);
+  }
+  .tab-content{
+    display:none;
+    opacity:0;
+    transition:opacity .35s ease;
+  }
+  .tab-content.active{
+    display:block;
+    opacity:1;
+  }
+  
+  /* Model visual box */
+  .model-visual-box{
+    margin-top:2.5rem;
+    background:var(--raise);
+    background:color-mix(in srgb,var(--raise) 95%,transparent);
+    border:1px solid var(--hair-2);
+    border-radius:8px;
+    padding:1.8rem;
+    box-shadow:0 24px 60px rgba(0,0,0,.22);
+  }
+  .model-visual-header h4{
+    margin:0 0 .35rem;
+    font-family:var(--display);
+    font-size:1.22rem;
+    font-weight:var(--display-weight);
+    color:var(--cream);
+  }
+  .model-visual-header p{
+    margin:0 0 1.5rem;
+    color:var(--cream-dim);
+    font-size:.88rem;
+    line-height:1.45;
+  }
+  
+  /* Hinge SVG */
+  .visual-attention-layout{
+    display:grid;
+    grid-template-columns:1fr;
+    gap:1.8rem;
+  }
+  @media(min-width:768px){
+    .visual-attention-layout{
+      grid-template-columns:200px 1fr;
+    }
+  }
+  .visual-hinge-controls{
+    display:flex;
+    flex-direction:column;
+    gap:.65rem;
+    justify-content:center;
+  }
+  .hinge-btn{
+    background:var(--raise-2);
+    border:1px solid var(--hair-2);
+    border-radius:6px;
+    color:var(--cream-dim);
+    font-family:var(--label);
+    font-size:.68rem;
+    letter-spacing:.08em;
+    text-transform:uppercase;
+    padding:.75rem 1rem;
+    cursor:pointer;
+    text-align:left;
+    transition:all .22s ease;
+  }
+  .hinge-btn:hover{
+    border-color:var(--cream-faint);
+    color:var(--cream);
+  }
+  .hinge-btn.active{
+    border-color:var(--ember-dim);
+    color:var(--ember);
+    background:var(--ember-tint);
+  }
+  .visual-hinge-svg-container{
+    background:var(--ink);
+    border:1px solid var(--hair-2);
+    border-radius:6px;
+    padding:1rem;
+    display:flex;
+    justify-content:center;
+    align-items:center;
+  }
+  .hinge-svg{
+    width:100%;
+    max-width:440px;
+    height:auto;
+  }
+  .node-outer{
+    transition:stroke .3s ease, fill .3s ease;
+  }
+  .node-inner{
+    transition:fill .3s ease, transform .3s ease;
+    transform-origin:center;
+  }
+  .connection-line{
+    transition:stroke .3s ease, stroke-dasharray .3s ease, opacity .3s ease;
+    opacity:0.25;
+  }
+  .connection-line.active{
+    opacity:1;
+  }
+  .node-txt{
+    font-family:var(--sans);
+    font-size:10px;
+    fill:var(--cream-dim);
+  }
+  .brain-node.active .node-txt{
+    fill:var(--cream);
+  }
+  .brain-node.active .node-outer{
+    stroke:var(--ember);
+  }
+  .brain-node.active .node-inner{
+    fill:var(--ember);
+    transform:scale(1.2);
+  }
+  .brain-node.active.tpn-node .node-outer{
+    stroke:var(--cream);
+  }
+  .brain-node.active.tpn-node .node-inner{
+    fill:var(--cream);
+  }
+  .visual-hinge-description{
+    grid-column:1 / -1;
+    background:var(--raise-2);
+    border-left:2px solid var(--ember);
+    padding:.85rem 1.1rem;
+    font-size:.88rem;
+    line-height:1.5;
+    color:var(--cream-dim);
+    transition:all .3s ease;
+  }
+  .visual-hinge-description.tpn-state{
+    border-left-color:var(--cream);
+  }
+  
+  /* Habit Layout */
+  .visual-habit-layout{
+    display:grid;
+    grid-template-columns:1fr;
+    gap:1.5rem;
+  }
+  @media(min-width:768px){
+    .visual-habit-layout{
+      grid-template-columns:1fr 1fr;
+    }
+  }
+  .habit-loop-box{
+    background:var(--raise-2);
+    border:1px solid var(--hair-2);
+    border-radius:6px;
+    padding:1.4rem;
+    display:flex;
+    flex-direction:column;
+    gap:1.1rem;
+  }
+  .habit-loop-box h5{
+    margin:0;
+    font-family:var(--display);
+    font-size:1.05rem;
+    color:var(--cream);
+  }
+  .habit-loop-box.hijacked{
+    border-left:3px solid var(--ember-dim);
+  }
+  .habit-loop-box.liturgical{
+    border-left:3px solid var(--cream-faint);
+  }
+  .loop-graphic-box{
+    display:flex;
+    justify-content:center;
+    background:var(--ink);
+    padding:.85rem;
+    border-radius:4px;
+    border:1px solid var(--hair);
+  }
+  .mini-loop-svg{
+    width:100%;
+    max-width:240px;
+    height:auto;
+  }
+  .habit-steps-list{
+    margin:0;
+    padding:0 0 0 1.2rem;
+    color:var(--cream-dim);
+    font-size:.84rem;
+    line-height:1.5;
+  }
+  .habit-steps-list li{
+    margin-bottom:.42rem;
+  }
+  .habit-steps-list li strong{
+    color:var(--cream);
+  }
+  
+  /* Table styling */
+  .integration-table-wrapper{
+    overflow-x:auto;
+    border:1px solid var(--hair-2);
+    border-radius:6px;
+  }
+  .neuro-table{
+    width:100%;
+    border-collapse:collapse;
+    text-align:left;
+    font-size:.85rem;
+    background:var(--raise-2);
+    color:var(--cream-dim);
+  }
+  .neuro-table th, .neuro-table td{
+    padding:.95rem 1.2rem;
+    border-bottom:1px solid var(--hair-2);
+    line-height:1.45;
+  }
+  .neuro-table th{
+    background:var(--raise);
+    color:var(--cream);
+    font-family:var(--label);
+    font-size:.72rem;
+    letter-spacing:.08em;
+    text-transform:uppercase;
+  }
+  .neuro-table tr:last-child td{
+    border-bottom:0;
+  }
+  .align-row{
+    transition:all .2s ease;
+  }
+  .align-row:hover{
+    background:color-mix(in srgb,var(--raise-2) 90%,var(--ember-tint));
+    color:var(--cream);
+  }
+  .tbl-subtext{
+    font-size:.75rem;
+    color:var(--cream-faint);
+  }
+  
+  /* Slider layout */
+  .visual-slider-layout{
+    display:flex;
+    flex-direction:column;
+    gap:1.8rem;
+    transition:background .35s ease, border-color .35s ease;
+    padding:1.4rem;
+    border-radius:6px;
+    border:1px solid var(--hair-2);
+    background:var(--raise-2);
+  }
+  .slider-control-row{
+    display:flex;
+    align-items:center;
+    gap:1rem;
+  }
+  .slider-side-lbl{
+    font-family:var(--label);
+    font-size:.65rem;
+    letter-spacing:.08em;
+    text-transform:uppercase;
+    color:var(--cream-dim);
+    flex:none;
+  }
+  .slider-side-lbl.threat{
+    color:var(--ember-dim);
+  }
+  .slider-side-lbl.rest{
+    color:var(--cream-dim);
+    transition:color .35s ease;
+  }
+  .spectrum-range-slider{
+    width:100%;
+    height:6px;
+    border-radius:3px;
+    background:var(--hair-2);
+    outline:none;
+    -webkit-appearance:none;
+    appearance:none;
+    cursor:pointer;
+  }
+  .spectrum-range-slider::-webkit-slider-thumb{
+    -webkit-appearance:none;
+    appearance:none;
+    width:18px;
+    height:18px;
+    border-radius:50%;
+    background:var(--ember);
+    border:2px solid var(--cream);
+    cursor:pointer;
+    transition:background .3s ease;
+  }
+  .spectrum-range-slider::-moz-range-thumb{
+    width:18px;
+    height:18px;
+    border-radius:50%;
+    background:var(--ember);
+    border:2px solid var(--cream);
+    cursor:pointer;
+    transition:background .3s ease;
+  }
+  .slider-metrics-grid{
+    display:grid;
+    grid-template-columns:1fr;
+    gap:1rem;
+  }
+  @media(min-width:600px){
+    .slider-metrics-grid{
+      grid-template-columns:repeat(3, 1fr);
+    }
+  }
+  .metric-card{
+    background:var(--raise);
+    border:1px solid var(--hair-2);
+    border-radius:4px;
+    padding:1rem;
+    transition:border-color .3s ease, background .3s ease;
+  }
+  .metric-card .mini-heading{
+    margin-bottom:.35rem;
+  }
+  .metric-val{
+    margin:0 0 .25rem;
+    font-family:var(--display);
+    font-size:1.1rem;
+    color:var(--cream);
+    transition:color .3s ease;
+  }
+  .metric-sub{
+    margin:0;
+    font-size:.8rem;
+    color:var(--cream-dim);
+    line-height:1.35;
+    transition:color .3s ease;
+  }
+
   @media print{
     @page{margin:.65in}
     *{animation:none !important;transition:none !important;box-shadow:none !important}
@@ -1383,6 +1753,308 @@
   </div>
 </section>
 
+<!-- INTEGRATION: THEOLOGY & NEUROBIOLOGY -->
+<section class="move integration" id="integration">
+  <div class="wrap">
+    <div class="move-head">
+      <div class="eyebrow">Integration &middot; Theology &amp; Neurobiology</div>
+      <h2>The biology of <span class="glyph">stillness and desire.</span></h2>
+      <p class="lede">
+        Our minds are not just thinking engines, and our bodies are not just survival machines. 
+        The Christian calling to attention, habit transformation, purpose, and rest maps directly to our neurobiological architecture. 
+        <b>Contemplation is a physical discipline.</b>
+      </p>
+    </div>
+
+    <!-- TABS NAVIGATION -->
+    <div class="tabs-nav" role="tablist" aria-label="Integration Lenses">
+      <button class="tab-btn active" role="tab" aria-selected="true" aria-controls="tab-attention" id="btn-attention">Attention &amp; Focus</button>
+      <button class="tab-btn" role="tab" aria-selected="false" aria-controls="tab-habit" id="btn-habit">Habit &amp; Liturgy</button>
+      <button class="tab-btn" role="tab" aria-selected="false" aria-controls="tab-purpose" id="btn-purpose">Purpose &amp; Seeking</button>
+      <button class="tab-btn" role="tab" aria-selected="false" aria-controls="tab-rest" id="btn-rest">Sabbath &amp; Play</button>
+    </div>
+
+    <!-- TAB CONTENTS -->
+    <div class="tab-contents">
+      <!-- TAB 1: ATTENTION -->
+      <div class="tab-content active" id="tab-attention" role="tabpanel" aria-labelledby="btn-attention">
+        <div class="lens-grid">
+          <!-- PRACTICE -->
+          <div class="lens-card lens-practice">
+            <span class="lens-label"><svg class="icon" aria-hidden="true" focusable="false"><use href="#icon-book"></use></svg>Practice</span>
+            <p><strong>Centering Prayer &amp; Sacred Words:</strong> Sitting in silent surrender, using a single word (e.g., <em>Abba</em>, <em>Silence</em>, <em>Jesus</em>) as a simple anchor. When thoughts arise, the practitioner doesn't engage them, but gently returns to the word to re-aim the will.</p>
+            <span class="cite">The Cloud of Unknowing (14th Century)</span>
+          </div>
+          <!-- EVIDENCE -->
+          <div class="lens-card lens-evidence">
+            <span class="lens-label"><svg class="icon" aria-hidden="true" focusable="false"><use href="#icon-microscope"></use></svg>Evidence</span>
+            <p><strong>DMN vs. TPN Activation:</strong> The Default Mode Network (mPFC, PCC, precuneus) handles self-talk and anxiety. Contemplative prayer deactivates these nodes while functional coupling increases between the prefrontal attention centers (dlPFC) and the PCC, training automated, non-judgmental executive monitoring.</p>
+            <span class="cite">Brewer et al., PNAS (2011)</span>
+          </div>
+          <!-- FRAMEWORK -->
+          <div class="lens-card lens-framework">
+            <span class="lens-label"><svg class="icon" aria-hidden="true" focusable="false"><use href="#icon-route"></use></svg>Framework</span>
+            <p><strong>The Apophatic Cloud:</strong> The hyperactive Default Mode Network is the neurobiological signature of the egoic "narrative self." Silent apophatic contemplation acts as a physiological "cloud of forgetting," quieting self-referential loops to open space for union with God.</p>
+          </div>
+        </div>
+
+        <!-- INTERACTIVE MODEL: ATTENTIONAL HINGE -->
+        <div class="model-visual-box">
+          <div class="model-visual-header">
+            <h4>Interactive Model: The Attentional Hinge</h4>
+            <p>Click the toggles to see how silent centering prayer shifts neural activity from the rumination loops of the Default Mode Network (DMN) to the receptive Task-Positive Network (TPN).</p>
+          </div>
+          <div class="visual-attention-layout">
+            <div class="visual-hinge-controls">
+              <button class="hinge-btn active" id="hinge-dmn" type="button">Active Rumination (DMN)</button>
+              <button class="hinge-btn" id="hinge-tpn" type="button">Still Contemplation (TPN)</button>
+            </div>
+            <div class="visual-hinge-svg-container">
+              <svg viewBox="0 0 500 240" class="hinge-svg">
+                <path d="M50 120 C50 48, 150 32, 250 32 C350 32, 450 48, 450 120 C450 192, 380 208, 300 208 C260 208, 240 224, 200 224 C150 224, 50 192, 50 120 Z" class="brain-contour" fill="none" stroke="var(--hair-2)" stroke-width="2" stroke-dasharray="4 4" />
+                
+                <path d="M120 100 L380 120" id="path-dmn" class="connection-line active" stroke="var(--ember-dim)" stroke-width="3" />
+                <path d="M260 80 L350 160" id="path-tpn" class="connection-line" stroke="var(--cream-dim)" stroke-width="3" stroke-dasharray="5 5" />
+                
+                <g class="brain-node active" id="node-mpfc">
+                  <circle cx="120" cy="100" r="16" class="node-outer" fill="var(--raise)" stroke="var(--ember)" stroke-width="2" />
+                  <circle cx="120" cy="100" r="6" class="node-inner" fill="var(--ember)" />
+                  <text x="120" y="132" class="node-txt" text-anchor="middle">Medial PFC</text>
+                </g>
+                <g class="brain-node active" id="node-pcc">
+                  <circle cx="380" cy="120" r="16" class="node-outer" fill="var(--raise)" stroke="var(--ember)" stroke-width="2" />
+                  <circle cx="380" cy="120" r="6" class="node-inner" fill="var(--ember)" />
+                  <text x="380" y="152" class="node-txt" text-anchor="middle">PCC / Precuneus</text>
+                </g>
+                
+                <g class="brain-node tpn-node" id="node-dlpfc">
+                  <circle cx="260" cy="80" r="16" class="node-outer" fill="var(--raise)" stroke="var(--hair-2)" stroke-width="2" />
+                  <circle cx="260" cy="80" r="6" class="node-inner" fill="var(--cream-dim)" />
+                  <text x="260" y="60" class="node-txt" text-anchor="middle">Dorsolateral PFC</text>
+                </g>
+                <g class="brain-node tpn-node" id="node-insula">
+                  <circle cx="350" cy="160" r="16" class="node-outer" fill="var(--raise)" stroke="var(--hair-2)" stroke-width="2" />
+                  <circle cx="350" cy="160" r="6" class="node-inner" fill="var(--cream-dim)" />
+                  <text x="350" y="192" class="node-txt" text-anchor="middle">Insula</text>
+                </g>
+              </svg>
+            </div>
+            <div class="visual-hinge-description" id="hinge-desc">
+              <strong>Narrative Rumination Loop Active:</strong> Energy moves continuously between the Medial Prefrontal Cortex (mPFC) and the Posterior Cingulate Cortex (PCC). The brain compiles histories, anticipates threats, and maintains self-defensive stories, generating cortisol.
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- TAB 2: HABIT -->
+      <div class="tab-content" id="tab-habit" role="tabpanel" aria-labelledby="btn-habit">
+        <div class="lens-grid">
+          <!-- PRACTICE -->
+          <div class="lens-card lens-practice">
+            <span class="lens-label"><svg class="icon" aria-hidden="true" focusable="false"><use href="#icon-book"></use></svg>Practice</span>
+            <p><strong>Structured Liturgy &amp; Physical Postures:</strong> The physical rhythms of daily offices (Morning and Evening prayers, kneeling, chanting, breathing) convert spiritual intentions into repetitive muscular reflexes, bypassing cognitive hesitation.</p>
+            <span class="cite">The Daily Office (Traditional Rhythms)</span>
+          </div>
+          <!-- EVIDENCE -->
+          <div class="lens-card lens-evidence">
+            <span class="lens-label"><svg class="icon" aria-hidden="true" focusable="false"><use href="#icon-microscope"></use></svg>Evidence</span>
+            <p><strong>The Striatum &amp; Synaptic Myelination:</strong> Repeating an embodied sequence automates the action in the Basal Ganglia (dorsal striatum), grouping complex routines into single neurological commands. Repeated firing initiates myelin wrapping of synapses, speeding communication 100x.</p>
+            <span class="cite">Hebb's Law &amp; Striatal Chunking</span>
+          </div>
+          <!-- FRAMEWORK -->
+          <div class="lens-card lens-framework">
+            <span class="lens-label"><svg class="icon" aria-hidden="true" focusable="false"><use href="#icon-route"></use></svg>Framework</span>
+            <p><strong>The Liturgical Animal:</strong> We are shaped by whatever routines we physically practice. Traditional liturgies of faith act as physical counter-strategies, transferring theological truths from the fragile conscious prefrontal cortex into automatic striatal instincts.</p>
+            <span class="cite">James K.A. Smith, Desiring the Kingdom</span>
+          </div>
+        </div>
+
+        <!-- MODEL 2: LITURGICAL VS COUNTERFEIT LOOP -->
+        <div class="model-visual-box">
+          <div class="model-visual-header">
+            <h4>Comparison: Cultural Hijacking vs. Liturgical Redirection</h4>
+            <p>Compare how passive cultural loops hijack our striatal cue-routine-reward systems, and how active faith liturgies build somatic stability.</p>
+          </div>
+          <div class="visual-habit-layout">
+            <div class="habit-loop-box hijacked">
+              <h5>The Compulsive Loop (Hijacked)</h5>
+              <div class="loop-graphic-box">
+                <svg viewBox="0 0 200 120" class="mini-loop-svg">
+                  <path d="M 30,60 A 40,40 0 1,1 170,60 A 40,40 0 1,1 30,60" fill="none" stroke="var(--ember-dim)" stroke-width="2" stroke-dasharray="3 3"/>
+                  <circle cx="100" cy="20" r="14" fill="var(--raise)" stroke="var(--ember)" stroke-width="1.5" />
+                  <circle cx="140" cy="60" r="14" fill="var(--raise)" stroke="var(--ember)" stroke-width="1.5" />
+                  <circle cx="100" cy="100" r="14" fill="var(--raise)" stroke="var(--ember)" stroke-width="1.5" />
+                  <circle cx="60" cy="60" r="14" fill="var(--raise)" stroke="var(--ember)" stroke-width="1.5" />
+                  <text x="100" y="24" text-anchor="middle" font-size="8" fill="var(--cream)">CUE</text>
+                  <text x="140" y="64" text-anchor="middle" font-size="8" fill="var(--cream)">ROUTINE</text>
+                  <text x="100" y="104" text-anchor="middle" font-size="8" fill="var(--cream)">REWARD</text>
+                  <text x="60" y="64" text-anchor="middle" font-size="7" fill="var(--ember)">HEDONIC</text>
+                </svg>
+              </div>
+              <ul class="habit-steps-list">
+                <li><strong>Cue:</strong> Anxiety, boredom, or a notification chime.</li>
+                <li><strong>Routine:</strong> Compulsive scrolling of feed (automatic).</li>
+                <li><strong>Reward:</strong> Anticipatory dopamine surge, quickly dropping.</li>
+                <li><strong>Long-Term:</strong> Receptor down-regulation, increasing baseline anxiety.</li>
+              </ul>
+            </div>
+            
+            <div class="habit-loop-box liturgical">
+              <h5>The Sanctifying Loop (Liturgical)</h5>
+              <div class="loop-graphic-box">
+                <svg viewBox="0 0 200 120" class="mini-loop-svg">
+                  <path d="M 30,60 A 40,40 0 1,1 170,60 A 40,40 0 1,1 30,60" fill="none" stroke="var(--cream-dim)" stroke-width="2" />
+                  <circle cx="100" cy="20" r="14" fill="var(--raise)" stroke="var(--cream)" stroke-width="1.5" />
+                  <circle cx="140" cy="60" r="14" fill="var(--raise)" stroke="var(--cream)" stroke-width="1.5" />
+                  <circle cx="100" cy="100" r="14" fill="var(--raise)" stroke="var(--cream)" stroke-width="1.5" />
+                  <circle cx="60" cy="60" r="14" fill="var(--raise)" stroke="var(--cream)" stroke-width="1.5" />
+                  <text x="100" y="24" text-anchor="middle" font-size="8" fill="var(--cream)">CUE</text>
+                  <text x="140" y="64" text-anchor="middle" font-size="8" fill="var(--cream)">ROUTINE</text>
+                  <text x="100" y="104" text-anchor="middle" font-size="8" fill="var(--cream)">REWARD</text>
+                  <text x="60" y="64" text-anchor="middle" font-size="8" fill="var(--cream)">LTP</text>
+                </svg>
+              </div>
+              <ul class="habit-steps-list">
+                <li><strong>Cue:</strong> Rising sun, hourly chime, or somatic stress.</li>
+                <li><strong>Routine:</strong> Posture alignment, litany recital, breathing.</li>
+                <li><strong>Reward:</strong> Serotonin release, physical calming, safety.</li>
+                <li><strong>Long-Term:</strong> Long-Term Potentiation (LTP) of peaceful reflexes.</li>
+              </ul>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- TAB 3: PURPOSE -->
+      <div class="tab-content" id="tab-purpose" role="tabpanel" aria-labelledby="btn-purpose">
+        <div class="lens-grid">
+          <!-- PRACTICE -->
+          <div class="lens-card lens-practice">
+            <span class="lens-label"><svg class="icon" aria-hidden="true" focusable="false"><use href="#icon-book"></use></svg>Practice</span>
+            <p><strong>Vocation &amp; Ignatian Discernment:</strong> Reviewing choices using rules for the discernment of spirits. Cultivating "spiritual consolation" (deep joy and peace) rather than "spiritual desolation" (fleeting validation followed by anxiety).</p>
+            <span class="cite">St. Ignatius of Loyola, Spiritual Exercises</span>
+          </div>
+          <!-- EVIDENCE -->
+          <div class="lens-card lens-evidence">
+            <span class="lens-label"><svg class="icon" aria-hidden="true" focusable="false"><use href="#icon-microscope"></use></svg>Evidence</span>
+            <p><strong>Dopaminergic SEEKING vs. Serotonin:</strong> The mesolimbic SEEKING system (VTA -> NAc) fuels the chase, not satisfaction. Reaching temporary goals results in dopamine drops (hedonic treadmill). Serotonergic tracks supply deep relational safety, balancing seeking with contentment.</p>
+            <span class="cite">Panksepp, Affective Neuroscience (1998)</span>
+          </div>
+          <!-- FRAMEWORK -->
+          <div class="lens-card lens-framework">
+            <span class="lens-label"><svg class="icon" aria-hidden="true" focusable="false"><use href="#icon-route"></use></svg>Framework</span>
+            <p><strong>The Restless Heart &amp; Theosis:</strong> The brain adapts structurally to all finite rewards, making permanent physical satisfaction impossible. The dopaminergic seeking pathway is built for the infinite. Vocation and <em>theosis</em> (union with God) satisfy this infinite seeking drive.</p>
+            <span class="cite">Augustine of Hippo, Confessions</span>
+          </div>
+        </div>
+
+        <!-- MODEL 3: ALIGNMENT TABLE -->
+        <div class="model-visual-box">
+          <div class="model-visual-header">
+            <h4>Neurochemical Alignment Matrix</h4>
+            <p>Hover over each row to highlight the deep physiological and theological linkages between neural systems, drivers, and practices.</p>
+          </div>
+          <div class="integration-table-wrapper">
+            <table class="neuro-table">
+              <thead>
+                <tr>
+                  <th>Neural Structure</th>
+                  <th>Chemical Driver</th>
+                  <th>Theological Concept</th>
+                  <th>Contemplative Practice</th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr class="align-row">
+                  <td><strong>Default Mode Network</strong><br><span class="tbl-subtext">mPFC, PCC, precuneus</span></td>
+                  <td>Glutamate / baseline activity</td>
+                  <td>The Egoic Narrative / "The Old Man"</td>
+                  <td>Apophatic Silent Centering Prayer</td>
+                </tr>
+                <tr class="align-row">
+                  <td><strong>Basal Ganglia</strong><br><span class="tbl-subtext">Dorsal striatum</span></td>
+                  <td>Dopamine (anticipatory cue)</td>
+                  <td>Liturgical Love (Augustine's <em>Pondus</em>)</td>
+                  <td>Embodied liturgy, kneeling, Daily Office</td>
+                </tr>
+                <tr class="align-row">
+                  <td><strong>Mesolimbic Pathway</strong><br><span class="tbl-subtext">VTA, Nucleus Accumbens</span></td>
+                  <td>Dopamine (SEEKING system)</td>
+                  <td>The Restless Heart / Transcendent Drive</td>
+                  <td>Vocation alignment &amp; Ignatian Discernment</td>
+                </tr>
+                <tr class="align-row">
+                  <td><strong>Mammalian PLAY Circuit</strong><br><span class="tbl-subtext">PAG, Thalamus</span></td>
+                  <td>Endorphins &amp; Oxytocin</td>
+                  <td>Sabbath Sanctuary / <em>Deus Ludens</em></td>
+                  <td>Sabbath ceasing, communal feasts, play</td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
+        </div>
+      </div>
+
+      <!-- TAB 4: REST -->
+      <div class="tab-content" id="tab-rest" role="tabpanel" aria-labelledby="btn-rest">
+        <div class="lens-grid">
+          <!-- PRACTICE -->
+          <div class="lens-card lens-practice">
+            <span class="lens-label"><svg class="icon" aria-hidden="true" focusable="false"><use href="#icon-book"></use></svg>Practice</span>
+            <p><strong>Sabbath Keeping &amp; Eutrapelia:</strong> Actively halting commerce, tracking, and striving for a full 24 hours. Cultivating the virtue of <em>eutrapelia</em> (graceful, lighthearted play), reminding the mind that creation is a gift to be enjoyed, not exploited.</p>
+            <span class="cite">The Sabbath Commandment · Eutrapelia Virtue</span>
+          </div>
+          <!-- EVIDENCE -->
+          <div class="lens-card lens-evidence">
+            <span class="lens-label"><svg class="icon" aria-hidden="true" focusable="false"><use href="#icon-microscope"></use></svg>Evidence</span>
+            <p><strong>Subcortical PLAY Circuits &amp; BDNF:</strong> Perceived safety deactivates the threat response (fear/rage), allowing subcortical play pathways to fire. Play releases endorphins, decreases cortisol, and releases BDNF in the prefrontal cortex, promoting brain plasticity.</p>
+            <span class="cite">Jaak Panksepp, Affective Neuroscience</span>
+          </div>
+          <!-- FRAMEWORK -->
+          <div class="lens-card lens-framework">
+            <span class="lens-label"><svg class="icon" aria-hidden="true" focusable="false"><use href="#icon-route"></use></svg>Framework</span>
+            <p><strong>The Sanctuary in Time:</strong> Sabbath is the liturgical activation of safety circuits. By halting survival efforts, we establish a weekly sanctuary where the brain moves from threat management to relational joy. Creation is experienced as play, not raw material.</p>
+            <span class="cite">Abraham Joshua Heschel, The Sabbath</span>
+          </div>
+        </div>
+
+        <!-- MODEL 4: PLAY SPECTURM SLIDER -->
+        <div class="model-visual-box">
+          <div class="model-visual-header">
+            <h4>Interactive Simulator: The Sabbath / Play Spectrum</h4>
+            <p>Drag the slider below to shift the nervous system from the threat and striving of weekday survival to the deep neurological rest of Sabbath safety.</p>
+          </div>
+          <div class="visual-slider-layout" id="slider-card-box">
+            <div class="slider-control-row">
+              <span class="slider-side-lbl threat">Threat &amp; Striving</span>
+              <input type="range" min="0" max="100" value="0" class="spectrum-range-slider" id="spectrum-slider" aria-label="Sabbath Rest Slider">
+              <span class="slider-side-lbl rest">Sabbath Delight</span>
+            </div>
+            
+            <div class="slider-metrics-grid">
+              <div class="metric-card" id="metric-neuro">
+                <span class="mini-heading">Nervous State</span>
+                <p class="metric-val" id="val-state">Hyperactive Threat Loop</p>
+                <p class="metric-sub" id="val-brain">High Amygdala &amp; Cortisol levels</p>
+              </div>
+              <div class="metric-card" id="metric-focus">
+                <span class="mini-heading">Primary Focus</span>
+                <p class="metric-val" id="val-focus">Control &amp; Accumulation</p>
+                <p class="metric-sub" id="val-drive">Dopamine seeking / hedonic chasing</p>
+              </div>
+              <div class="metric-card" id="metric-outcome">
+                <span class="mini-heading">Neurological Outcome</span>
+                <p class="metric-val" id="val-outcome">Chronic Stiffening</p>
+                <p class="metric-sub" id="val-myelin">Reinforcing fear-based superhighways</p>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
 <!-- CAVEATS -->
 <section class="caveats">
   <div class="wrap">
@@ -1873,6 +2545,139 @@
       else setPhrase(prayers[current].rest);
     }
   });
+})();
+
+// --- Integration Section Logic ---
+(function(){
+  // Tab switching
+  const tabs = document.querySelectorAll('.tab-btn');
+  const contents = document.querySelectorAll('.tab-content');
+  
+  tabs.forEach(tab => {
+    tab.addEventListener('click', () => {
+      const targetId = tab.getAttribute('aria-controls');
+      
+      // Update active tab button
+      tabs.forEach(t => {
+        t.classList.remove('active');
+        t.setAttribute('aria-selected', 'false');
+      });
+      tab.classList.add('active');
+      tab.setAttribute('aria-selected', 'true');
+      
+      // Update active content
+      contents.forEach(content => {
+        content.classList.remove('active');
+      });
+      const targetContent = document.getElementById(targetId);
+      if(targetContent) {
+        targetContent.classList.add('active');
+      }
+    });
+  });
+
+  // Tab 1: Attention Hinge Toggle
+  const btnDmn = document.getElementById('hinge-dmn');
+  const btnTpn = document.getElementById('hinge-tpn');
+  const pathDmn = document.getElementById('path-dmn');
+  const pathTpn = document.getElementById('path-tpn');
+  const desc = document.getElementById('hinge-desc');
+  const nodeMpfc = document.getElementById('node-mpfc');
+  const nodePcc = document.getElementById('node-pcc');
+  const nodeDlpfc = document.getElementById('node-dlpfc');
+  const nodeInsula = document.getElementById('node-insula');
+
+  if(btnDmn && btnTpn) {
+    btnDmn.addEventListener('click', () => {
+      btnDmn.classList.add('active');
+      btnTpn.classList.remove('active');
+      
+      nodeMpfc.classList.add('active');
+      nodePcc.classList.add('active');
+      nodeDlpfc.classList.remove('active');
+      nodeDlpfc.querySelector('.node-outer').style.stroke = 'var(--hair-2)';
+      nodeDlpfc.querySelector('.node-inner').style.fill = 'var(--cream-dim)';
+      nodeInsula.classList.remove('active');
+      nodeInsula.querySelector('.node-outer').style.stroke = 'var(--hair-2)';
+      nodeInsula.querySelector('.node-inner').style.fill = 'var(--cream-dim)';
+      
+      pathDmn.classList.add('active');
+      pathTpn.classList.remove('active');
+      pathTpn.setAttribute('stroke-dasharray', '5 5');
+      
+      desc.innerHTML = "<strong>Narrative Rumination Loop Active:</strong> Energy moves continuously between the Medial Prefrontal Cortex (mPFC) and the Posterior Cingulate Cortex (PCC). The brain compiles histories, anticipates threats, and maintains self-defensive stories, generating cortisol.";
+      desc.classList.remove('tpn-state');
+    });
+
+    btnTpn.addEventListener('click', () => {
+      btnTpn.classList.add('active');
+      btnDmn.classList.remove('active');
+      
+      nodeMpfc.classList.remove('active');
+      nodePcc.classList.remove('active');
+      nodeDlpfc.classList.add('active');
+      nodeDlpfc.querySelector('.node-outer').style.stroke = 'var(--cream)';
+      nodeDlpfc.querySelector('.node-inner').style.fill = 'var(--cream)';
+      nodeInsula.classList.add('active');
+      nodeInsula.querySelector('.node-outer').style.stroke = 'var(--cream)';
+      nodeInsula.querySelector('.node-inner').style.fill = 'var(--cream)';
+      
+      pathDmn.classList.remove('active');
+      pathTpn.classList.add('active');
+      pathTpn.setAttribute('stroke-dasharray', '0');
+      
+      desc.innerHTML = "<strong>Task-Positive Network Re-coupled:</strong> Return to the sacred word recruits the dlPFC to decouple from PCC-mPFC rumination. Insula activation brings somatic awareness, quieting the Default Mode Network and allowing receptive rest in God.";
+      desc.classList.add('tpn-state');
+    });
+  }
+
+  // Tab 4: Sabbath Slider
+  const slider = document.getElementById('spectrum-slider');
+  const cardBox = document.getElementById('slider-card-box');
+  const valState = document.getElementById('val-state');
+  const valBrain = document.getElementById('val-brain');
+  const valFocus = document.getElementById('val-focus');
+  const valDrive = document.getElementById('val-drive');
+  const valOutcome = document.getElementById('val-outcome');
+  const valMyelin = document.getElementById('val-myelin');
+
+  if(slider) {
+    slider.addEventListener('input', () => {
+      const val = parseInt(slider.value);
+      
+      if(val < 30) {
+        valState.textContent = "Hyperactive Threat Loop";
+        valState.style.color = 'var(--ember)';
+        valBrain.textContent = "High Amygdala & Cortisol levels";
+        valFocus.textContent = "Control & Accumulation";
+        valDrive.textContent = "Dopamine seeking / hedonic chasing";
+        valOutcome.textContent = "Chronic Stiffening";
+        valMyelin.textContent = "Reinforcing fear-based superhighways";
+        cardBox.style.borderColor = 'var(--hair-2)';
+        cardBox.style.background = 'var(--raise-2)';
+      } else if (val < 70) {
+        valState.textContent = "Transition State (Ceasing)";
+        valState.style.color = 'var(--cream)';
+        valBrain.textContent = "Amygdala activity beginning to decay";
+        valFocus.textContent = "De-escalation / Unplugging";
+        valDrive.textContent = "Dopamine seeking declines";
+        valOutcome.textContent = "Perceived Safety Rising";
+        valMyelin.textContent = "Synapses transitioning to rest states";
+        cardBox.style.borderColor = 'var(--hair-2)';
+        cardBox.style.background = 'var(--raise)';
+      } else {
+        valState.textContent = "Sabbath Safety Circuit Active";
+        valState.style.color = '#A7CB69'; // Laurel green
+        valBrain.textContent = "Subcortical PLAY circuits active; low cortisol";
+        valFocus.textContent = "Relational Joy & Play (Eutrapelia)";
+        valDrive.textContent = "Endorphins & Oxytocin release";
+        valOutcome.textContent = "Neuroplastic Growth (BDNF)";
+        valMyelin.textContent = "Myelinating pathways of peace and attachment";
+        cardBox.style.borderColor = 'rgba(167, 203, 105, 0.4)';
+        cardBox.style.background = 'color-mix(in srgb, var(--raise-2) 93%, rgba(167, 203, 105, 0.08))';
+      }
+    });
+  }
 })();
 </script>
 </body>
