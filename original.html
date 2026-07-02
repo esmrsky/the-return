@@ -1,0 +1,945 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>The Return — Quieting the Mind, Repositioning on God</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,300..600;1,9..144,300..500&family=Instrument+Sans:wght@400;500;600&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --ink:#0E0D0B;
+    --raise:#17140D;
+    --raise-2:#1E1A11;
+    --cream:#F2EBDC;
+    --cream-dim:rgba(242,235,220,.66);
+    --cream-faint:rgba(242,235,220,.40);
+    --hair:rgba(242,235,220,.12);
+    --hair-2:rgba(242,235,220,.20);
+    --ember:#F3651C;
+    --ember-dim:rgba(243,101,28,.55);
+    --ember-tint:rgba(243,101,28,.07);
+    --ember-glow:rgba(243,101,28,.22);
+    --serif:"Fraunces",Georgia,serif;
+    --sans:"Instrument Sans",system-ui,sans-serif;
+    --mono:"JetBrains Mono",ui-monospace,monospace;
+    --wrap:70rem;
+    --read:44rem;
+  }
+
+  *{box-sizing:border-box;margin:0;padding:0}
+  html{scroll-behavior:smooth}
+  body{
+    background:var(--ink);
+    color:var(--cream);
+    font-family:var(--sans);
+    font-weight:400;
+    line-height:1.65;
+    -webkit-font-smoothing:antialiased;
+    overflow-x:hidden;
+  }
+  ::selection{background:var(--ember);color:var(--ink)}
+  a{color:inherit}
+
+  /* ---------- top progress ---------- */
+  #progress{
+    position:fixed;top:0;left:0;height:2px;width:0%;
+    background:var(--ember);z-index:200;
+    transition:width .1s linear;
+  }
+
+  /* ---------- layout ---------- */
+  .wrap{max-width:var(--wrap);margin:0 auto;padding:0 clamp(1.25rem,5vw,3rem)}
+  .read{max-width:var(--read)}
+  section{position:relative}
+
+  .eyebrow{
+    font-family:var(--mono);
+    font-size:.72rem;
+    letter-spacing:.24em;
+    text-transform:uppercase;
+    color:var(--ember);
+    display:flex;align-items:center;gap:.7rem;
+  }
+  .eyebrow::before{content:"";width:1.6rem;height:1px;background:var(--ember);opacity:.7}
+
+  /* ---------- hero ---------- */
+  .hero{
+    min-height:100svh;
+    display:flex;flex-direction:column;justify-content:center;
+    padding-top:6rem;padding-bottom:4rem;position:relative;overflow:hidden;
+  }
+  .hero-orb{
+    position:absolute;
+    right:-14vw;top:50%;transform:translateY(-50%);
+    width:min(62vw,44rem);height:min(62vw,44rem);
+    border-radius:50%;
+    background:radial-gradient(circle at 42% 40%, var(--ember-glow), rgba(243,101,28,.04) 45%, transparent 68%);
+    filter:blur(6px);
+    animation:breathe 11s ease-in-out infinite;
+    pointer-events:none;z-index:0;
+  }
+  @keyframes breathe{
+    0%,100%{transform:translateY(-50%) scale(.82);opacity:.7}
+    50%{transform:translateY(-50%) scale(1.05);opacity:1}
+  }
+  .hero .wrap{position:relative;z-index:1;width:100%}
+  .hero h1{
+    font-family:var(--serif);
+    font-weight:340;
+    font-size:clamp(3.2rem,11vw,7.5rem);
+    line-height:.95;
+    letter-spacing:-.02em;
+    margin:1.6rem 0 0;
+    font-optical-sizing:auto;
+  }
+  .hero h1 em{font-style:italic;color:var(--ember);font-weight:340}
+  .hero .sub{
+    margin-top:2rem;max-width:38rem;
+    font-size:clamp(1.05rem,2.3vw,1.32rem);
+    color:var(--cream-dim);line-height:1.6;
+  }
+  .scrollcue{
+    margin-top:3.4rem;font-family:var(--mono);font-size:.7rem;
+    letter-spacing:.22em;text-transform:uppercase;color:var(--cream-faint);
+    display:flex;align-items:center;gap:.6rem;
+  }
+  .scrollcue span{display:inline-block;width:1px;height:2.2rem;background:linear-gradient(var(--cream-faint),transparent);animation:drop 2.4s ease-in-out infinite}
+  @keyframes drop{0%{transform:scaleY(.2);transform-origin:top}50%{transform:scaleY(1);transform-origin:top}100%{transform:scaleY(.2);transform-origin:top}}
+
+  /* ---------- reading key ---------- */
+  .key{padding:5.5rem 0 1rem;border-top:1px solid var(--hair)}
+  .key h2{font-family:var(--serif);font-weight:360;font-size:clamp(1.7rem,4vw,2.5rem);line-height:1.1;margin:1.1rem 0 1.4rem;letter-spacing:-.01em}
+  .key p.lead{color:var(--cream-dim);max-width:42rem;font-size:1.08rem}
+  .legend{
+    display:grid;gap:1rem;margin-top:2.4rem;
+    grid-template-columns:repeat(3,1fr);
+  }
+  .legend .lens-card{margin:0}
+  .legend .lens-card p{font-size:.92rem;color:var(--cream-dim)}
+  .key-note{
+    margin-top:2.2rem;padding:1.1rem 1.3rem;
+    border-left:2px solid var(--ember-dim);background:var(--ember-tint);
+    font-family:var(--mono);font-size:.82rem;line-height:1.7;color:var(--cream-dim);
+    border-radius:0 4px 4px 0;
+  }
+
+  /* ---------- lens cards (shared) ---------- */
+  .lens-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:1.1rem;margin-top:2.6rem}
+  .lens-card{
+    background:var(--raise);
+    border-top:1.5px solid var(--hair-2);
+    padding:1.5rem 1.4rem 1.7rem;
+    border-radius:0 0 5px 5px;
+    position:relative;
+  }
+  .lens-card .lens-label{
+    font-family:var(--mono);font-size:.68rem;letter-spacing:.2em;text-transform:uppercase;
+    display:block;margin-bottom:.9rem;
+  }
+  .lens-card p{font-size:.96rem;line-height:1.66}
+  .lens-card p + p{margin-top:.8rem}
+  .lens-card .cite{
+    display:block;margin-top:1rem;font-family:var(--mono);font-size:.7rem;
+    letter-spacing:.02em;color:var(--cream-faint);line-height:1.6;
+  }
+
+  /* practice */
+  .lens-practice{border-top-color:var(--cream-faint)}
+  .lens-practice .lens-label{color:var(--cream);font-family:var(--serif);font-style:italic;font-size:.95rem;letter-spacing:.02em;text-transform:none}
+  /* evidence */
+  .lens-evidence{border-top-style:dotted;border-top-width:2px;border-top-color:var(--cream-faint)}
+  .lens-evidence .lens-label{color:var(--cream-dim)}
+  .lens-evidence .lens-label::before{content:"[ "}
+  .lens-evidence .lens-label::after{content:" ]"}
+  /* framework */
+  .lens-framework{
+    border-top-color:var(--ember);
+    background:linear-gradient(var(--ember-tint),transparent 70%),var(--raise);
+    box-shadow:inset 3px 0 0 -1px var(--ember-dim);
+  }
+  .lens-framework .lens-label{color:var(--ember)}
+
+  /* ---------- premise ---------- */
+  .premise{padding:6rem 0 2rem}
+  .premise h2{font-family:var(--serif);font-weight:360;font-size:clamp(1.9rem,4.5vw,3rem);line-height:1.08;margin:1.1rem 0 1.6rem;letter-spacing:-.01em;max-width:24ch}
+  .premise p{color:var(--cream-dim);font-size:1.08rem;margin-bottom:1.1rem}
+  .premise p strong{color:var(--cream);font-weight:600}
+  .premise .pull{
+    font-family:var(--serif);font-style:italic;font-weight:360;
+    font-size:clamp(1.4rem,3.4vw,2rem);line-height:1.28;color:var(--cream);
+    margin:2.2rem 0;padding-left:1.3rem;border-left:2px solid var(--ember);max-width:30ch;
+  }
+
+  /* white bear demo */
+  .whitebear{
+    margin:2.6rem 0;border:1px solid var(--hair);border-radius:8px;
+    background:var(--raise);overflow:hidden;
+  }
+  .wb-stage{
+    position:relative;min-height:9.5rem;display:flex;align-items:center;justify-content:center;
+    padding:2rem 1.5rem;text-align:center;
+  }
+  .wb-ghost{position:absolute;inset:0;pointer-events:none;overflow:hidden}
+  .wb-ghost span{
+    position:absolute;font-family:var(--serif);font-style:italic;
+    color:var(--cream);opacity:0;transition:opacity 1.4s ease;white-space:nowrap;
+    font-size:clamp(1rem,2.4vw,1.5rem);
+  }
+  .whitebear.suppress .wb-ghost span{opacity:.16}
+  .wb-instruction{position:relative;z-index:2;font-family:var(--serif);font-size:clamp(1.15rem,3vw,1.6rem);color:var(--cream);max-width:22ch}
+  .wb-controls{display:flex;flex-wrap:wrap;gap:.6rem;padding:1.1rem 1.3rem;border-top:1px solid var(--hair);align-items:center}
+  .wb-caption{font-family:var(--mono);font-size:.76rem;color:var(--cream-dim);line-height:1.6;flex:1;min-width:14rem}
+  .wb-caption b{color:var(--ember);font-weight:500}
+
+  .btn{
+    font-family:var(--mono);font-size:.74rem;letter-spacing:.14em;text-transform:uppercase;
+    background:transparent;color:var(--cream);border:1px solid var(--hair-2);
+    padding:.62rem 1.05rem;border-radius:100px;cursor:pointer;
+    transition:all .2s ease;white-space:nowrap;
+  }
+  .btn:hover{border-color:var(--cream);background:rgba(242,235,220,.05)}
+  .btn:focus-visible{outline:2px solid var(--ember);outline-offset:2px}
+  .btn.primary{background:var(--ember);color:var(--ink);border-color:var(--ember);font-weight:500}
+  .btn.primary:hover{background:#ff7530;border-color:#ff7530}
+  .btn.ghost{opacity:.7}
+
+  /* ---------- sequence index ---------- */
+  .seq{padding:5rem 0;border-top:1px solid var(--hair);border-bottom:1px solid var(--hair)}
+  .seq .eyebrow{margin-bottom:2.2rem}
+  .seq-list{display:grid;gap:0}
+  .seq-item{
+    display:grid;grid-template-columns:auto 1fr auto;gap:1.4rem;align-items:baseline;
+    padding:1.4rem 0;border-top:1px solid var(--hair);text-decoration:none;
+    transition:padding-left .3s ease;
+  }
+  .seq-item:first-child{border-top:none}
+  .seq-item:hover{padding-left:.6rem}
+  .seq-num{font-family:var(--mono);font-size:.8rem;color:var(--ember);letter-spacing:.1em}
+  .seq-name{font-family:var(--serif);font-size:clamp(1.5rem,4vw,2.3rem);font-weight:360;letter-spacing:-.01em}
+  .seq-desc{font-size:.92rem;color:var(--cream-dim);text-align:right;max-width:20rem;justify-self:end}
+  .seq-item:hover .seq-name{color:var(--ember)}
+
+  /* ---------- rail ---------- */
+  .rail{
+    position:fixed;left:2.2rem;top:50%;transform:translateY(-50%);
+    z-index:120;display:none;flex-direction:column;gap:.1rem;
+  }
+  .rail a{
+    display:flex;align-items:center;gap:.8rem;text-decoration:none;
+    font-family:var(--mono);font-size:.68rem;letter-spacing:.14em;color:var(--cream-faint);
+    padding:.42rem 0;transition:color .25s ease;
+  }
+  .rail a .dot{width:6px;height:6px;border-radius:50%;background:var(--cream-faint);transition:all .25s ease;flex:none}
+  .rail a .rlabel{opacity:0;transform:translateX(-4px);transition:all .25s ease}
+  .rail a:hover .rlabel,.rail a.active .rlabel{opacity:1;transform:none}
+  .rail a:hover{color:var(--cream)}
+  .rail a.active{color:var(--ember)}
+  .rail a.active .dot{background:var(--ember);box-shadow:0 0 0 4px var(--ember-tint);transform:scale(1.25)}
+  @media(min-width:1180px){.rail{display:flex}}
+
+  /* ---------- move sections ---------- */
+  .move{padding:6.5rem 0 3rem;border-top:1px solid var(--hair)}
+  .move-head{max-width:var(--read)}
+  .move h2{
+    font-family:var(--serif);font-weight:360;letter-spacing:-.015em;
+    font-size:clamp(2.1rem,6vw,3.5rem);line-height:1.02;margin:1.3rem 0 0;
+  }
+  .move h2 .glyph{color:var(--ember);font-style:italic}
+  .move .lede{font-size:clamp(1.1rem,2.4vw,1.34rem);color:var(--cream-dim);margin-top:1.5rem;line-height:1.55}
+  .move .lede b{color:var(--cream);font-weight:600}
+
+  .bridge{
+    display:inline-flex;align-items:center;gap:.6rem;margin-top:1.8rem;
+    font-family:var(--mono);font-size:.74rem;letter-spacing:.06em;color:var(--ember);
+    border:1px dashed var(--ember-dim);padding:.5rem .9rem;border-radius:100px;
+  }
+  .bridge::before{content:"→";font-size:1rem}
+
+  /* ---------- wave module ---------- */
+  .interactive{
+    margin-top:2.8rem;background:var(--raise);border:1px solid var(--hair);
+    border-radius:10px;padding:1.8rem 1.6rem 1.6rem;
+  }
+  .interactive .int-label{font-family:var(--mono);font-size:.68rem;letter-spacing:.2em;text-transform:uppercase;color:var(--ember);margin-bottom:1.4rem;display:block}
+  .wave-frame{position:relative;width:100%}
+  .wave-frame svg{display:block;width:100%;height:auto;overflow:visible}
+  .wave-path-bg{fill:none;stroke:var(--hair-2);stroke-width:1.5}
+  .wave-path{fill:none;stroke:var(--ember);stroke-width:2.5;stroke-linecap:round}
+  .wave-marker{fill:var(--ember)}
+  .wave-marker-halo{fill:var(--ember-glow)}
+  .wave-baseline{stroke:var(--hair);stroke-width:1;stroke-dasharray:3 4}
+  .wave-stage{
+    position:absolute;transform:translate(-50%,0);
+    font-family:var(--mono);font-size:.66rem;letter-spacing:.12em;text-transform:uppercase;
+    color:var(--cream-faint);opacity:.35;transition:all .35s ease;text-align:center;white-space:nowrap;
+  }
+  .wave-stage.on{opacity:1;color:var(--ember)}
+  .wave-controls{display:flex;flex-wrap:wrap;align-items:center;gap:.9rem;margin-top:1.6rem}
+  .wave-status{font-family:var(--mono);font-size:.78rem;color:var(--cream-dim);min-width:12rem}
+  .wave-status b{color:var(--ember);font-weight:500}
+
+  /* ---------- breath module (signature) ---------- */
+  .breath{
+    margin-top:2.8rem;background:radial-gradient(circle at 50% 42%,var(--raise-2),var(--raise) 70%);
+    border:1px solid var(--hair);border-radius:14px;
+    padding:2.6rem 1.6rem 2rem;text-align:center;overflow:hidden;position:relative;
+  }
+  .breath .int-label{color:var(--ember)}
+  .orb-zone{position:relative;height:19rem;display:flex;align-items:center;justify-content:center;margin:.5rem auto 0}
+  .orb{
+    width:8.5rem;height:8.5rem;border-radius:50%;position:relative;
+    background:radial-gradient(circle at 42% 38%,var(--ember),rgba(243,101,28,.35) 60%,transparent 72%);
+    transform:scale(.6);transition:transform 4s cubic-bezier(.4,0,.5,1);
+    box-shadow:0 0 60px var(--ember-glow);
+  }
+  .orb-ring{
+    position:absolute;top:50%;left:50%;width:15rem;height:15rem;border-radius:50%;
+    transform:translate(-50%,-50%);border:1px solid var(--ember-dim);opacity:.25;pointer-events:none;
+  }
+  .breath-phrase{
+    position:absolute;bottom:.4rem;left:0;right:0;
+    font-family:var(--serif);font-style:italic;font-weight:360;
+    font-size:clamp(1.25rem,3.4vw,1.8rem);color:var(--cream);
+    transition:opacity .8s ease;
+  }
+  .breath-cue{
+    font-family:var(--mono);font-size:.72rem;letter-spacing:.24em;text-transform:uppercase;
+    color:var(--ember);height:1rem;transition:opacity .5s ease;margin-bottom:.2rem;
+  }
+  .breath-controls{display:flex;flex-wrap:wrap;justify-content:center;align-items:center;gap:.9rem;margin-top:2rem}
+  .breath-select{
+    font-family:var(--mono);font-size:.74rem;letter-spacing:.06em;
+    background:transparent;color:var(--cream);border:1px solid var(--hair-2);
+    padding:.6rem .9rem;border-radius:100px;cursor:pointer;
+  }
+  .breath-select:focus-visible{outline:2px solid var(--ember);outline-offset:2px}
+  .breath-count{font-family:var(--mono);font-size:.74rem;color:var(--cream-faint);letter-spacing:.1em}
+  .breath-count b{color:var(--cream);font-weight:500}
+
+  /* ---------- synthesis ---------- */
+  .synth{padding:7rem 0 3rem;border-top:1px solid var(--hair)}
+  .synth h2{font-family:var(--serif);font-weight:360;font-size:clamp(2rem,5vw,3.2rem);line-height:1.05;letter-spacing:-.015em;margin:1.2rem 0 1.6rem;max-width:20ch}
+  .synth p{color:var(--cream-dim);font-size:1.08rem;margin-bottom:1.15rem;max-width:var(--read)}
+  .synth p strong{color:var(--cream);font-weight:600}
+  .synth p em{color:var(--ember);font-style:normal}
+  .synth .pull{
+    font-family:var(--serif);font-style:italic;font-weight:360;
+    font-size:clamp(1.5rem,3.6vw,2.2rem);line-height:1.25;color:var(--cream);
+    margin:2.6rem 0;max-width:26ch;
+  }
+  .acedia{
+    margin:2.8rem 0;padding:1.8rem 1.7rem;border:1px solid var(--hair);
+    border-left:2px solid var(--ember);border-radius:0 8px 8px 0;background:var(--raise);
+  }
+  .acedia .tag{font-family:var(--mono);font-size:.68rem;letter-spacing:.2em;text-transform:uppercase;color:var(--ember);display:block;margin-bottom:.9rem}
+  .acedia h3{font-family:var(--serif);font-weight:360;font-size:clamp(1.3rem,3vw,1.8rem);margin-bottom:.9rem;line-height:1.15}
+  .acedia p{max-width:none;font-size:1rem}
+
+  /* ---------- caveats + sources ---------- */
+  .caveats{padding:5.5rem 0 2rem;border-top:1px solid var(--hair)}
+  .caveats h2{font-family:var(--serif);font-weight:360;font-size:clamp(1.6rem,4vw,2.3rem);margin:1.1rem 0 1.8rem;letter-spacing:-.01em}
+  .cav-list{display:grid;gap:1.1rem;max-width:var(--read)}
+  .cav-item{display:grid;grid-template-columns:auto 1fr;gap:1rem;font-family:var(--mono);font-size:.84rem;line-height:1.7;color:var(--cream-dim)}
+  .cav-item .m{color:var(--ember)}
+  .cav-item b{color:var(--cream);font-weight:500}
+
+  .sources{padding:4rem 0 2rem;border-top:1px solid var(--hair)}
+  .sources h2{font-family:var(--mono);font-size:.72rem;letter-spacing:.24em;text-transform:uppercase;color:var(--cream-faint);margin-bottom:1.6rem}
+  .src-grid{display:grid;grid-template-columns:1fr 1fr;gap:.7rem 2.4rem;max-width:52rem}
+  .src-grid p{font-family:var(--mono);font-size:.76rem;line-height:1.7;color:var(--cream-dim)}
+  .src-grid p b{color:var(--cream);font-weight:500}
+
+  footer{padding:4rem 0 5rem;border-top:1px solid var(--hair)}
+  footer p{font-family:var(--mono);font-size:.72rem;letter-spacing:.08em;color:var(--cream-faint);line-height:1.8}
+  footer .verse{font-family:var(--serif);font-style:italic;font-size:1.1rem;color:var(--cream-dim);margin-bottom:1.4rem;letter-spacing:0}
+
+  /* ---------- responsive ---------- */
+  @media(max-width:760px){
+    .legend{grid-template-columns:1fr}
+    .lens-grid{grid-template-columns:1fr}
+    .seq-item{grid-template-columns:auto 1fr;gap:.4rem 1.1rem}
+    .seq-desc{grid-column:1/-1;text-align:left;justify-self:start;margin-top:.3rem}
+    .src-grid{grid-template-columns:1fr}
+    .hero-orb{opacity:.6}
+  }
+
+  @media(prefers-reduced-motion:reduce){
+    html{scroll-behavior:auto}
+    .hero-orb,.scrollcue span{animation:none}
+    .orb{transition:none !important}
+    *{transition-duration:.001ms !important}
+  }
+</style>
+</head>
+<body>
+
+<div id="progress"></div>
+
+<nav class="rail" aria-label="Sequence">
+  <a href="#premise" data-target="premise"><span class="dot"></span><span class="rlabel">Premise</span></a>
+  <a href="#m1" data-target="m1"><span class="dot"></span><span class="rlabel">01 Quiet</span></a>
+  <a href="#m2" data-target="m2"><span class="dot"></span><span class="rlabel">02 Empty</span></a>
+  <a href="#m3" data-target="m3"><span class="dot"></span><span class="rlabel">03 Release</span></a>
+  <a href="#m4" data-target="m4"><span class="dot"></span><span class="rlabel">04 Meet</span></a>
+  <a href="#m5" data-target="m5"><span class="dot"></span><span class="rlabel">05 Return</span></a>
+  <a href="#synth" data-target="synth"><span class="dot"></span><span class="rlabel">Synthesis</span></a>
+</nav>
+
+<!-- HERO -->
+<header class="hero">
+  <div class="hero-orb" aria-hidden="true"></div>
+  <div class="wrap">
+    <div class="eyebrow">Practices for reconnecting with God</div>
+    <h1>Be still,<br><em>and return.</em></h1>
+    <p class="sub">You can't empty your mind on command &mdash; the harder you shove a thought away, the louder it gets back. But there is a sequence that works: quiet the input, empty the well, release your grip, meet what rises, and reposition. Each move has a desert-monastic practice seventeen centuries deep, and a mechanism modern psychology can finally name.</p>
+    <div class="scrollcue"><span></span>Begin</div>
+  </div>
+</header>
+
+<!-- READING KEY -->
+<section class="key">
+  <div class="wrap">
+    <div class="eyebrow">How to read this</div>
+    <h2>Three ways of knowing, kept apart on purpose.</h2>
+    <p class="lead">Every claim below is sorted into one of three lenses, so you always know what kind of thing you're being told. They're never blended.</p>
+    <div class="legend">
+      <div class="lens-card lens-practice">
+        <span class="lens-label">Practice</span>
+        <p>The inherited discipline &mdash; what to actually do. Drawn from the contemplative and monastic tradition. This is <b style="color:var(--cream);font-weight:600">observation</b>: what the tradition holds.</p>
+      </div>
+      <div class="lens-card lens-evidence">
+        <span class="lens-label">Evidence</span>
+        <p>The mechanism, from psychology and neuroscience. Measured, replicated, cited. Also <b style="color:var(--cream);font-weight:600">observation</b>: what the research found.</p>
+      </div>
+      <div class="lens-card lens-framework">
+        <span class="lens-label">Framework</span>
+        <p>My reading &mdash; how it connects to the Subscription Model (wanting &rarr; counterfeit resolution). Marked in orange because it is <b style="color:var(--ember);font-weight:600">interpretation</b>, not a finding.</p>
+      </div>
+    </div>
+    <p class="key-note">A boundary worth stating up front: the evidence validates <b style="color:var(--cream)">mechanisms</b> &mdash; how attention and emotion behave &mdash; not the prayers themselves as clinical treatments. Where a link between old practice and new science is a <b style="color:var(--cream)">parallel</b> rather than a documented lineage, it says so.</p>
+  </div>
+</section>
+
+<!-- PREMISE -->
+<section class="premise" id="premise">
+  <div class="wrap">
+    <div class="eyebrow">The premise</div>
+    <h2 class="read">Why the mind won't go quiet when you order it to.</h2>
+    <div class="read">
+      <p>In 1987, the psychologist Daniel Wegner asked people to do one thing: sit for five minutes and <strong>not</strong> think about a white bear. They rang a bell every time they failed. They failed constantly &mdash; and when the suppression period ended, they thought about the bear <strong>even more</strong> than a group who'd been told to think about it all along. He called it the rebound effect (Wegner et al., <em style="font-style:normal;color:var(--cream-dim)">Journal of Personality and Social Psychology</em>, 1987).</p>
+      <p>The reason is structural. To suppress a thought, one part of the mind has to keep <strong>checking</strong> whether the thought is still gone &mdash; which means it has to keep the thought loaded to check for it. The monitor summons what the suppressor is trying to banish. Push harder, lose worse.</p>
+      <p class="pull">You don't win by pushing the thought out. You win by occupying the space with something else.</p>
+      <p>That escape hatch came from Wegner's own lab: the group given a specific thing to focus on instead &mdash; picture a red Volkswagen &mdash; didn't rebound. Redirection worked where suppression failed. That single fact is the hinge of everything that follows: not <em style="font-style:normal;color:var(--cream)">stop the thought</em>, but <em style="font-style:normal;color:var(--cream)">decline it and turn</em>. The desert monks had the phenomenology cold sixteen hundred years earlier: you cannot keep a thought from arriving. You can only decline to keep it.</p>
+    </div>
+
+    <!-- white bear interactive -->
+    <div class="whitebear" id="whitebear">
+      <div class="wb-stage">
+        <div class="wb-ghost" aria-hidden="true"></div>
+        <div class="wb-instruction" id="wbText">Whatever you do, don't think about a white bear.</div>
+      </div>
+      <div class="wb-controls">
+        <div class="wb-caption" id="wbCaption">Told to suppress it, people think of it <b>more</b> &mdash; and more again once they stop trying (Wegner, 1987).</div>
+        <button class="btn" id="wbSuppress">Try to suppress it</button>
+        <button class="btn primary" id="wbRedirect">Redirect instead</button>
+      </div>
+    </div>
+
+    <div class="read">
+      <div class="lens-card lens-framework" style="margin-top:.5rem">
+        <span class="lens-label">Framework</span>
+        <p>A "stress thought" is rarely just static. In the Subscription Model it's the <strong style="color:var(--cream);font-weight:600">wanting-loop pitching a counterfeit resolution</strong>: <em>solve this now, rehearse it once more, and you'll finally feel safe.</em> Suppression pays the pitch attention. Redirection declines the offer. The five moves ahead are, underneath, five refusals.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- SEQUENCE INDEX -->
+<section class="seq">
+  <div class="wrap">
+    <div class="eyebrow">The sequence &mdash; five moves</div>
+    <div class="seq-list">
+      <a class="seq-item" href="#m1"><span class="seq-num">01</span><span class="seq-name">Quiet</span><span class="seq-desc">Lower the input before anything else</span></a>
+      <a class="seq-item" href="#m2"><span class="seq-num">02</span><span class="seq-name">Empty</span><span class="seq-desc">Pour out the well &mdash; lament, not venting</span></a>
+      <a class="seq-item" href="#m3"><span class="seq-num">03</span><span class="seq-name">Release</span><span class="seq-desc">Loosen the grip &mdash; consent, not suppression</span></a>
+      <a class="seq-item" href="#m4"><span class="seq-num">04</span><span class="seq-name">Meet</span><span class="seq-desc">Face what rises &mdash; watch it, or talk back</span></a>
+      <a class="seq-item" href="#m5"><span class="seq-num">05</span><span class="seq-name">Return</span><span class="seq-desc">Reposition on God &mdash; occupy attention</span></a>
+    </div>
+  </div>
+</section>
+
+<!-- MOVE 01 -->
+<section class="move" id="m1">
+  <div class="wrap">
+    <div class="move-head">
+      <div class="eyebrow">Move 01 &middot; Quiet</div>
+      <h2>Lower the <span class="glyph">input.</span></h2>
+      <p class="lede">Before you try to still anything internal, cut the signal coming in. <b>Noise isn't only sound</b> &mdash; it's input: feeds, notifications, the ambient hum of other people's expectations you keep running in the background.</p>
+    </div>
+    <div class="lens-grid">
+      <div class="lens-card lens-practice">
+        <span class="lens-label">Practice</span>
+        <p>The desert fathers fled to the cell &mdash; not to escape people but to face themselves before God. Abba Moses' counsel was blunt: go, sit in your cell, and the cell will teach you everything.</p>
+        <p>Henri Nouwen named solitude "the furnace of transformation," the place where the performing self burns off. The aim isn't blankness; it's dropping the input low enough that a quieter voice becomes audible.</p>
+        <span class="cite">Sayings of the Desert Fathers · Nouwen, The Way of the Heart</span>
+      </div>
+      <div class="lens-card lens-evidence">
+        <span class="lens-label">Evidence</span>
+        <p>Mind-wandering fills roughly half of waking life and tracks with lower mood, not higher (Killingsworth &amp; Gilbert, <span style="color:var(--cream-dim)">Science</span>, 2010).</p>
+        <p>That self-referential chatter runs on the default mode network (Raichle et al., 2001) &mdash; the same network that goes hyperactive in rumination and depression, and that quiets when attention settles (Brewer et al., <span style="color:var(--cream-dim)">PNAS</span>, 2011). Less input, less fuel for the loop.</p>
+        <span class="cite">Killingsworth &amp; Gilbert 2010 · Raichle 2001 · Brewer 2011</span>
+      </div>
+      <div class="lens-card lens-framework">
+        <span class="lens-label">Framework</span>
+        <p>Solitude is where you stop outsourcing your sense of self to the room. In your terms, the feed is an altar you bow to for identity; stepping away from it is the first refusal &mdash; the precondition that makes every later move possible.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- MOVE 02 -->
+<section class="move" id="m2">
+  <div class="wrap">
+    <div class="move-head">
+      <div class="eyebrow">Move 02 &middot; Empty</div>
+      <h2>Pour out the <span class="glyph">well.</span></h2>
+      <p class="lede">Don't skip the noise in your head &mdash; <b>name it.</b> But name it <b>to God</b>, not into the air. That one difference is what separates release from rehearsal.</p>
+    </div>
+    <div class="lens-grid">
+      <div class="lens-card lens-practice">
+        <span class="lens-label">Practice</span>
+        <p>This is the work of the lament psalms. Psalm 13 spends four verses on raw complaint &mdash; <span style="font-family:var(--serif);font-style:italic">How long, O Lord? Will you forget me forever?</span> &mdash; then turns: <span style="font-family:var(--serif);font-style:italic">But I have trusted in your steadfast love.</span></p>
+        <p>The turn is deliberate, and it lands <em style="font-style:normal;color:var(--cream)">before</em> the feeling resolves. About a third of the Psalter is lament: the tradition hands grief a script and, crucially, a direction.</p>
+        <span class="cite">Psalm 13 · the lament tradition of the Psalter</span>
+      </div>
+      <div class="lens-card lens-evidence">
+        <span class="lens-label">Evidence</span>
+        <p>Naming a feeling measurably calms the brain's alarm. When people label an emotion, amygdala activity drops and the right ventrolateral prefrontal cortex comes online &mdash; "affect labeling," described as putting the brakes on emotion (Lieberman et al., <span style="color:var(--cream-dim)">Psychological Science</span>, 2007).</p>
+        <p>Writing worries out works similarly (Ramirez &amp; Beilock, 2011). Lament is labeling addressed to Someone, which hands the load off; open-ended venting just re-runs the alarm.</p>
+        <span class="cite">Lieberman 2007 · Ramirez &amp; Beilock 2011</span>
+      </div>
+      <div class="lens-card lens-framework">
+        <span class="lens-label">Framework</span>
+        <p>Venting <strong style="color:var(--cream);font-weight:600">refills</strong> the well &mdash; it's rumination with an audience. Lament <strong style="color:var(--cream);font-weight:600">empties</strong> it, because the complaint is handed off rather than looped. And the turn &mdash; <em>"but I trust"</em> &mdash; is you re-ordering your loves mid-sentence, out loud.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- MOVE 03 -->
+<section class="move" id="m3">
+  <div class="wrap">
+    <div class="move-head">
+      <div class="eyebrow">Move 03 &middot; Release</div>
+      <h2>Loosen the <span class="glyph">grip.</span></h2>
+      <p class="lede">Now stop fighting the thoughts &mdash; not by suppressing them (you already know that backfires) but by <b>letting go of your grip</b> and letting them pass through.</p>
+    </div>
+    <div class="lens-grid">
+      <div class="lens-card lens-practice">
+        <span class="lens-label">Practice</span>
+        <p>Thomas Keating's Centering Prayer is built on exactly this. You choose a "sacred word" &mdash; not a mantra to concentrate on, but a symbol of your <em style="font-style:normal;color:var(--cream)">consent</em> to God's presence. When you notice a thought has carried you off, you don't wrestle it; you return, ever so gently, to the word.</p>
+        <p>He compressed the whole method to four: resist no thought, retain no thought, react to no thought, return ever-so-gently. The word isn't the point. The returning is.</p>
+        <span class="cite">Keating, Open Mind, Open Heart · Contemplative Outreach</span>
+      </div>
+      <div class="lens-card lens-evidence">
+        <span class="lens-label">Evidence</span>
+        <p>This is the anti-suppression strategy in practice. Because trying not to think a thought amplifies it (Wegner), the workable move is non-engagement plus gentle redirection.</p>
+        <p>That same posture &mdash; noticing you've drifted and returning &mdash; is what down-regulates the default mode network in meditation studies (Brewer et al., 2011). You aren't emptying the mind; you're changing your relationship to its contents.</p>
+        <span class="cite">Wegner 1994 (ironic process) · Brewer 2011</span>
+      </div>
+      <div class="lens-card lens-framework">
+        <span class="lens-label">Framework</span>
+        <p>Consent is the opposite posture to the wanting-loop. The loop says <em>grip, solve, secure.</em> Release says: I don't have to resolve this thought to be safe &mdash; I can let it go and rest in Presence. Every gentle return is a small renunciation of the counterfeit.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- MOVE 04 -->
+<section class="move" id="m4">
+  <div class="wrap">
+    <div class="move-head">
+      <div class="eyebrow">Move 04 &middot; Meet</div>
+      <h2>Face what <span class="glyph">rises.</span></h2>
+      <p class="lede">Sharper thoughts keep coming &mdash; the cravings, the accusations, the ones that won't just drift off. For these, the tradition hands you <b>two tools</b>, and they're opposites: let it pass, or cut it off.</p>
+      <div class="bridge">the desert called this nepsis. we call it urge surfing.</div>
+    </div>
+
+    <div class="lens-grid">
+      <div class="lens-card lens-practice">
+        <span class="lens-label">Practice &mdash; watch</span>
+        <p>The desert tradition called intrusive thoughts <em style="font-style:normal;color:var(--cream)">logismoi</em>, and the discipline of meeting them <em style="font-style:normal;color:var(--cream)">nepsis</em> &mdash; watchfulness at the threshold. Evagrius' line: it isn't in our power whether a thought arrives, only whether we let it linger.</p>
+        <p>You catch it as it appears, name what it is, and decline to converse with it. Watch the wave rise, crest, and pass &mdash; without climbing on.</p>
+        <span class="cite">Evagrius, Praktikos · The Philokalia</span>
+      </div>
+      <div class="lens-card lens-evidence">
+        <span class="lens-label">Evidence &mdash; surf</span>
+        <p>Alan Marlatt built "urge surfing" in the 1980s for addiction treatment &mdash; the image came from a client who surfed. A craving isn't permanent: it triggers, rises, peaks, and falls, usually in minutes. You ride it out instead of being wiped out.</p>
+        <p>It moved into DBT as "emotion surfing" (Linehan). What it trains is the space between stimulus and response &mdash; the pause where choice reappears.</p>
+        <span class="cite">Marlatt &amp; Gordon · Bowen &amp; Marlatt, MBRP</span>
+      </div>
+      <div class="lens-card lens-framework">
+        <span class="lens-label">Framework</span>
+        <p>The craving-thought is the wanting-loop's sales pitch. Urge surfing is declining the offer <strong style="color:var(--cream);font-weight:600">without paying it the dopamine of engagement</strong> &mdash; you let the wanting crest and fall unrewarded, and the pattern weakens for next time.</p>
+      </div>
+    </div>
+
+    <!-- WAVE INTERACTIVE -->
+    <div class="interactive" id="waveModule">
+      <span class="int-label">Ride one out &mdash; the craving curve</span>
+      <div class="wave-frame">
+        <svg viewBox="0 0 600 200" role="img" aria-label="A craving rises, peaks, and falls back to baseline.">
+          <line class="wave-baseline" x1="0" y1="170" x2="600" y2="170"></line>
+          <path class="wave-path-bg" id="wavePathBg"></path>
+          <path class="wave-path" id="wavePath"></path>
+          <circle class="wave-marker-halo" id="waveHalo" r="11" cx="0" cy="170" style="opacity:0"></circle>
+          <circle class="wave-marker" id="waveDot" r="5" cx="0" cy="170" style="opacity:0"></circle>
+        </svg>
+        <div class="wave-stage" id="st-trigger" style="left:6%;top:80%">Trigger</div>
+        <div class="wave-stage" id="st-rise" style="left:33%;top:44%">Rise</div>
+        <div class="wave-stage" id="st-peak" style="left:50%;top:1%">Peak</div>
+        <div class="wave-stage" id="st-fall" style="left:70%;top:44%">Fall</div>
+      </div>
+      <div class="wave-controls">
+        <button class="btn primary" id="waveGo">A craving arrives</button>
+        <div class="wave-status" id="waveStatus">Press to watch one move through you.</div>
+      </div>
+    </div>
+
+    <!-- second tool: talk back -->
+    <div class="lens-grid" style="margin-top:1.3rem">
+      <div class="lens-card lens-practice">
+        <span class="lens-label">Practice &mdash; talk back</span>
+        <p>The second desert tool is the reverse of surfing: instead of letting a thought pass, you <em style="font-style:normal;color:var(--cream)">counter</em> it. Evagrius wrote a whole manual, <span style="font-style:italic">Antirrhetikos</span> (&ldquo;Talking Back&rdquo;), pairing 500-plus tempting thoughts each with a Scripture that contradicts it.</p>
+        <p>His models were David turning the Psalms against his enemies, and Jesus answering the wilderness with <span style="font-style:italic">"It is written."</span> You cut the thought off early, before it sets.</p>
+        <span class="cite">Evagrius, Antirrhetikos (Brakke trans.) · Luke 4</span>
+      </div>
+      <div class="lens-card lens-evidence">
+        <span class="lens-label">Evidence &mdash; the timing</span>
+        <p>Both tools are early-intervention. Evagrius borrowed the Stoic idea of the "first movement" (<span style="font-style:italic">propatheia</span>) &mdash; the involuntary flicker before a thought becomes a settled passion. Catch it there and it's cheap to handle; let it root and it runs you.</p>
+        <p>Which tool depends on the thought: a passing craving &rarr; <b style="color:var(--ember)">surf it</b>. A lie that needs correcting &rarr; <b style="color:var(--ember)">talk back</b>.</p>
+        <span class="cite">Stoic propatheia via Evagrius · Brakke, 2009</span>
+      </div>
+      <div class="lens-card lens-framework">
+        <span class="lens-label">Framework</span>
+        <p>Talking back is naming the counterfeit out loud and re-anchoring to the true source. It's Jeremiah 2:13 enacted in real time &mdash; refusing the broken cistern, turning back to the spring of living water &mdash; one countered thought at a time.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- MOVE 05 -->
+<section class="move" id="m5">
+  <div class="wrap">
+    <div class="move-head">
+      <div class="eyebrow">Move 05 &middot; Return</div>
+      <h2>Reposition on <span class="glyph">God.</span></h2>
+      <p class="lede">The last move isn't emptiness &mdash; it's <b>occupancy.</b> You give attention something true to rest on. Attention is single-channel: the stress loop can't run while you're genuinely holding an anchor.</p>
+    </div>
+    <div class="lens-grid">
+      <div class="lens-card lens-practice">
+        <span class="lens-label">Practice</span>
+        <p>The oldest form is the Jesus Prayer &mdash; <span style="font-style:italic">Lord Jesus Christ, Son of God, have mercy on me</span> &mdash; from the hesychast tradition, descended from the Psalter's <span style="font-style:italic">Kyrie eleison</span> and the tax collector's plea (Luke 18:13).</p>
+        <p>Pilgrims synced it to the breath: the Name on the inhale, the mercy on the exhale, until it prayed itself. This is breath prayer &mdash; one short line of Scripture, held slowly, riding the breath.</p>
+        <span class="cite">The Way of a Pilgrim · The Philokalia</span>
+      </div>
+      <div class="lens-card lens-evidence">
+        <span class="lens-label">Evidence</span>
+        <p>This is Wegner's red Volkswagen: the group given something else to hold didn't rebound. Focused attention is a bottleneck &mdash; occupying it crowds the loop out.</p>
+        <p>Anchoring attention on breath or a phrase is the lever that quiets the DMN (Brewer, 2011), the same lever labeling and surfing pull. Slow breathing (~5&ndash;6 per minute) also nudges the nervous system toward rest via vagal tone.</p>
+        <span class="cite">Wegner 1987 · Brewer 2011 · paced-breathing / HRV literature</span>
+      </div>
+      <div class="lens-card lens-framework">
+        <span class="lens-label">Framework</span>
+        <p>Repositioning is the ordered-loves framework enacted live. You're not just calming down &mdash; you're <strong style="color:var(--cream);font-weight:600">re-aiming desire at its true object.</strong> The breath prayer is a small liturgy of reattachment: wanting, finally pointed home.</p>
+      </div>
+    </div>
+
+    <!-- BREATH INTERACTIVE (signature) -->
+    <div class="breath" id="breathModule">
+      <span class="int-label">Pray one through &mdash; the breath</span>
+      <div class="breath-cue" id="breathCue">Ready</div>
+      <div class="orb-zone">
+        <div class="orb-ring" aria-hidden="true"></div>
+        <div class="orb" id="orb" aria-hidden="true"></div>
+        <div class="breath-phrase" id="breathPhrase">Lord Jesus Christ, Son of God, have mercy on me.</div>
+      </div>
+      <div class="breath-controls">
+        <button class="btn primary" id="breathToggle">Begin</button>
+        <select class="breath-select" id="breathPick" aria-label="Choose a breath prayer">
+          <option value="jesus">Jesus Prayer</option>
+          <option value="still">Psalm 46:10 &mdash; Be still</option>
+          <option value="will">Gethsemane &mdash; Not my will</option>
+        </select>
+        <span class="breath-count" id="breathCount">Breaths <b>0</b></span>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- SYNTHESIS -->
+<section class="synth" id="synth">
+  <div class="wrap">
+    <div class="eyebrow">The synthesis</div>
+    <h2>One loop, quieted &mdash; five times over.</h2>
+    <p>Read together, the five moves are a single motion: from <strong>gripping counterfeit resolutions</strong> to <strong>resting in the true source.</strong> In the Subscription Model, a stress-thought is the <em>Offer</em>; engaging it is the <em>Altar</em> you keep returning to; the rut it wears is the <em>Mental Structure</em> &mdash; rumination. The sequence dismantles that machine at every stage: lower the input, hand off the complaint, release the grip, decline or counter the pitch, reattach.</p>
+    <p class="pull">Not a technique for extracting a state from God &mdash; a way of clearing the noise until an already-present voice is audible.</p>
+
+    <div class="acedia">
+      <span class="tag">The failure mode &mdash; name it before it names you</span>
+      <h3>Acedia: the noonday demon.</h3>
+      <p>The desert fathers' subtlest enemy wasn't lust or anger &mdash; it was <strong style="color:var(--cream);font-weight:600">acedia</strong>, the "noonday demon" of Psalm 91:6. Cassian's monk keeps glancing at the window, willing the sun to set, certain the hour will never end. It's the listless restlessness that drives you out of the cell and whispers <em style="font-style:normal;color:var(--cream-dim)">this is pointless, go do something else.</em></p>
+      <p>Evagrius' cure was almost stubbornly plain: <strong style="color:var(--cream);font-weight:600">perseverance.</strong> Set a measure for the work and don't let up until it's done. That's the modern condition exactly &mdash; the reflex to abandon quiet the second it turns boring and reach for the feed. The sequence only works if you stay past the point where acedia tells you to leave.</p>
+    </div>
+
+    <p>Every move above is downstream of one refusal you keep making: the counterfeit says <em>solve it, hold it, feed it, leave.</em> The return says no &mdash; and turns.</p>
+  </div>
+</section>
+
+<!-- CAVEATS -->
+<section class="caveats">
+  <div class="wrap">
+    <div class="eyebrow">Where the evidence runs, and where it stops</div>
+    <h2>Honest edges.</h2>
+    <div class="cav-list">
+      <div class="cav-item"><span class="m">&mdash;</span><div><b>The science maps mechanisms, not the prayers.</b> Affect labeling, ironic process, and DMN activity are robust and replicated. But Centering Prayer and the Jesus Prayer haven't been trialed the way MBSR / MBCT have. The claim is mechanistic &mdash; same attentional lever, different object &mdash; not "prayer X is clinically proven."</div></div>
+      <div class="cav-item"><span class="m">&mdash;</span><div><b>Nepsis and urge surfing is a parallel, not a lineage.</b> The resemblance is real and noted by scholars, but Marlatt built urge surfing from a surfer client &mdash; there's no evidence he drew on Evagrius. Convergent, not derived.</div></div>
+      <div class="cav-item"><span class="m">&mdash;</span><div><b>"The space between stimulus and response"</b> is widely attributed to Viktor Frankl but doesn't appear verbatim in his published work. Treat it as folk-Frankl, not a citation.</div></div>
+      <div class="cav-item"><span class="m">&mdash;</span><div><b>Specific neuro-figures vary by source.</b> Some popular claims (e.g. exact DMN energy budgets) I've left out; the statements above stay at the level the primary studies support.</div></div>
+      <div class="cav-item"><span class="m">&mdash;</span><div><b>One bilingual note</b> &mdash; relevant if you pray across two languages: labeling an emotion in a non-native language may not down-regulate the amygdala as well (Torre &amp; Lieberman line of work). The mother tongue may carry more of the load.</div></div>
+      <div class="cav-item"><span class="m">&mdash;</span><div><b>This is a map, not the territory.</b> For clinical anxiety, trauma, or depression, these practices sit <em style="font-style:normal;color:var(--cream)">alongside</em> professional care, not instead of it.</div></div>
+    </div>
+  </div>
+</section>
+
+<!-- SOURCES -->
+<section class="sources">
+  <div class="wrap">
+    <h2>Sources</h2>
+    <div class="src-grid">
+      <p><b>Lieberman et al. (2007)</b> — Putting Feelings Into Words. Psychological Science.</p>
+      <p><b>Wegner et al. (1987); Wegner (1994)</b> — Paradoxical effects of thought suppression; ironic process theory.</p>
+      <p><b>Marlatt &amp; Gordon; Bowen &amp; Marlatt</b> — Relapse Prevention; Mindfulness-Based Relapse Prevention.</p>
+      <p><b>Keating</b> — Open Mind, Open Heart; Invitation to Love. Contemplative Outreach.</p>
+      <p><b>Evagrius Ponticus</b> — Praktikos; Antirrhetikos ("Talking Back"), trans. David Brakke (2009).</p>
+      <p><b>The Philokalia</b> — Palmer, Sherrard &amp; Ware (trans.).</p>
+      <p><b>The Way of a Pilgrim</b> — the Jesus Prayer tradition.</p>
+      <p><b>Killingsworth &amp; Gilbert (2010)</b> — A wandering mind is an unhappy mind. Science.</p>
+      <p><b>Raichle et al. (2001); Brewer et al. (2011)</b> — the default mode network; meditation &amp; DMN. PNAS.</p>
+      <p><b>Nouwen</b> — The Way of the Heart. Cassian, Conferences (on acedia).</p>
+    </div>
+  </div>
+</section>
+
+<footer>
+  <div class="wrap">
+    <p class="verse">"Be still, and know that I am God." — Psalm 46:10</p>
+    <p>A field guide to the return. Practice · Evidence · Framework kept separate throughout.<br>The tools are yours; the meeting is not yours to manufacture.</p>
+  </div>
+</footer>
+
+<script>
+(function(){
+  var reduce = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+
+  /* ---------- scroll progress ---------- */
+  var progress = document.getElementById('progress');
+  function onScroll(){
+    var h = document.documentElement;
+    var max = h.scrollHeight - h.clientHeight;
+    var pct = max > 0 ? (h.scrollTop || document.body.scrollTop) / max * 100 : 0;
+    progress.style.width = pct + '%';
+  }
+  window.addEventListener('scroll', onScroll, {passive:true});
+  onScroll();
+
+  /* ---------- rail active state ---------- */
+  var railLinks = Array.prototype.slice.call(document.querySelectorAll('.rail a'));
+  var targets = railLinks.map(function(a){ return document.getElementById(a.dataset.target); });
+  if('IntersectionObserver' in window){
+    var io = new IntersectionObserver(function(entries){
+      entries.forEach(function(e){
+        if(e.isIntersecting){
+          var id = e.target.id;
+          railLinks.forEach(function(a){ a.classList.toggle('active', a.dataset.target === id); });
+        }
+      });
+    }, {rootMargin:'-45% 0px -50% 0px'});
+    targets.forEach(function(t){ if(t) io.observe(t); });
+  }
+
+  /* ---------- white bear ---------- */
+  var wb = document.getElementById('whitebear');
+  var wbGhost = wb.querySelector('.wb-ghost');
+  var wbText = document.getElementById('wbText');
+  var wbCaption = document.getElementById('wbCaption');
+  var wbSuppress = document.getElementById('wbSuppress');
+  var wbRedirect = document.getElementById('wbRedirect');
+  var wbBuilt = false;
+  function buildGhosts(){
+    if(wbBuilt) return;
+    var spots = [[12,22],[64,18],[38,64],[80,58],[22,78],[54,40],[72,84]];
+    spots.forEach(function(s){
+      var el = document.createElement('span');
+      el.textContent = 'white bear';
+      el.style.left = s[0] + '%';
+      el.style.top = s[1] + '%';
+      wbGhost.appendChild(el);
+    });
+    wbBuilt = true;
+  }
+  wbSuppress.addEventListener('click', function(){
+    buildGhosts();
+    wb.classList.add('suppress');
+    wbText.textContent = 'The harder you push it away…';
+    wbCaption.innerHTML = 'It rebounds. Suppression keeps a monitor running that has to hold the very thought it\u2019s banishing \u2014 so it keeps showing up, <b>more</b> after you stop.';
+  });
+  wbRedirect.addEventListener('click', function(){
+    wb.classList.remove('suppress');
+    wbText.textContent = 'Picture a red Volkswagen instead.';
+    wbCaption.innerHTML = 'The rebound disappears. Given something else to hold, attention has no room left for the bear \u2014 <b>redirection</b>, not suppression. This is the hinge of the whole sequence.';
+  });
+
+  /* ---------- urge-surf wave ---------- */
+  var W = 600, baseY = 170, amp = 132, mu = 300, sigma = 78;
+  function curveY(x){ return baseY - amp * Math.exp(-Math.pow(x-mu,2)/(2*sigma*sigma)); }
+  var d = '', dStart = 30, dEnd = 570;
+  for(var x=dStart; x<=dEnd; x+=5){
+    d += (x===dStart ? 'M' : 'L') + x.toFixed(1) + ',' + curveY(x).toFixed(1) + ' ';
+  }
+  var pathBg = document.getElementById('wavePathBg');
+  var path = document.getElementById('wavePath');
+  pathBg.setAttribute('d', d);
+  path.setAttribute('d', d);
+  var pathLen = path.getTotalLength();
+  path.style.strokeDasharray = pathLen;
+  path.style.strokeDashoffset = pathLen;
+
+  var dot = document.getElementById('waveDot');
+  var halo = document.getElementById('waveHalo');
+  var waveGo = document.getElementById('waveGo');
+  var waveStatus = document.getElementById('waveStatus');
+  var stages = {
+    trigger: document.getElementById('st-trigger'),
+    rise: document.getElementById('st-rise'),
+    peak: document.getElementById('st-peak'),
+    fall: document.getElementById('st-fall')
+  };
+  var waveRunning = false;
+
+  function resetWave(){
+    for(var k in stages){ stages[k].classList.remove('on'); }
+    path.style.strokeDashoffset = pathLen;
+    dot.style.opacity = 0; halo.style.opacity = 0;
+  }
+  function setStages(px){
+    stages.trigger.classList.toggle('on', px > dStart+8);
+    stages.rise.classList.toggle('on', px > 150 && px < 300);
+    stages.peak.classList.toggle('on', px >= 278 && px <= 322);
+    stages.fall.classList.toggle('on', px > 322);
+  }
+
+  function runWave(){
+    if(waveRunning) return;
+    waveRunning = true;
+    waveGo.disabled = true; waveGo.classList.add('ghost');
+    resetWave();
+    dot.style.opacity = 1; halo.style.opacity = 1;
+    waveStatus.innerHTML = 'It arrives…';
+
+    if(reduce){
+      path.style.strokeDashoffset = 0;
+      var end = path.getPointAtLength(pathLen);
+      dot.setAttribute('cx', end.x); dot.setAttribute('cy', end.y);
+      halo.setAttribute('cx', end.x); halo.setAttribute('cy', end.y);
+      for(var k in stages){ stages[k].classList.add('on'); }
+      waveStatus.innerHTML = '<b>&hellip;and it passed.</b> You didn\u2019t have to act on it.';
+      finishWave();
+      return;
+    }
+
+    var dur = 3400, t0 = null;
+    function frame(ts){
+      if(!t0) t0 = ts;
+      var p = Math.min((ts - t0)/dur, 1);
+      var eased = p;
+      path.style.strokeDashoffset = pathLen * (1 - eased);
+      var pt = path.getPointAtLength(pathLen * eased);
+      dot.setAttribute('cx', pt.x); dot.setAttribute('cy', pt.y);
+      halo.setAttribute('cx', pt.x); halo.setAttribute('cy', pt.y);
+      setStages(pt.x);
+      if(pt.y < baseY - amp*0.5 && p < 0.55){ waveStatus.innerHTML = 'Rising \u2014 stay with it, don\u2019t climb on.'; }
+      if(p >= 0.45 && p < 0.62){ waveStatus.innerHTML = 'Peak. This is the hardest second. It won\u2019t hold.'; }
+      if(p >= 0.62 && p < 1){ waveStatus.innerHTML = 'Falling on its own \u2014 unfed, it fades.'; }
+      if(p < 1){ requestAnimationFrame(frame); }
+      else {
+        waveStatus.innerHTML = '<b>&hellip;and it passed.</b> You didn\u2019t have to act on it.';
+        finishWave();
+      }
+    }
+    requestAnimationFrame(frame);
+  }
+  function finishWave(){
+    waveRunning = false;
+    waveGo.disabled = false; waveGo.classList.remove('ghost');
+    waveGo.textContent = 'Send another';
+  }
+  waveGo.addEventListener('click', runWave);
+
+  /* ---------- breath orb ---------- */
+  var prayers = {
+    jesus: { inhale:'Lord Jesus Christ',       exhale:'have mercy on me',   rest:'Lord Jesus Christ, Son of God, have mercy on me.' },
+    still: { inhale:'Be still, and know',      exhale:'that I am God',       rest:'Be still, and know that I am God.' },
+    will:  { inhale:'Not my will',             exhale:'but yours be done',   rest:'Father, not my will, but yours be done.' }
+  };
+  var IN = 4000, OUT = 6000;
+  var orb = document.getElementById('orb');
+  var phrase = document.getElementById('breathPhrase');
+  var cue = document.getElementById('breathCue');
+  var toggle = document.getElementById('breathToggle');
+  var pick = document.getElementById('breathPick');
+  var countEl = document.getElementById('breathCount').querySelector('b');
+  var running = false, phase = 0, timer = null, count = 0, current = 'jesus';
+
+  function step(){
+    var p = prayers[current];
+    if(phase === 0){ // inhale
+      cue.textContent = 'Breathe in';
+      phrase.style.opacity = 0;
+      setTimeout(function(){ phrase.textContent = p.inhale; phrase.style.opacity = 1; }, 260);
+      if(!reduce){ orb.style.transitionDuration = IN + 'ms'; orb.style.transform = 'scale(1)'; }
+      count++; countEl.textContent = count;
+      phase = 1;
+      timer = setTimeout(step, IN);
+    } else { // exhale
+      cue.textContent = 'Breathe out';
+      phrase.style.opacity = 0;
+      setTimeout(function(){ phrase.textContent = p.exhale; phrase.style.opacity = 1; }, 260);
+      if(!reduce){ orb.style.transitionDuration = OUT + 'ms'; orb.style.transform = 'scale(0.55)'; }
+      phase = 0;
+      timer = setTimeout(step, OUT);
+    }
+  }
+  function startBreath(){
+    running = true; toggle.textContent = 'Pause'; toggle.classList.remove('primary');
+    phase = 0; step();
+  }
+  function stopBreath(){
+    running = false; toggle.textContent = 'Resume'; toggle.classList.add('primary');
+    cue.textContent = 'Paused';
+    clearTimeout(timer);
+    if(!reduce){ orb.style.transitionDuration = '1200ms'; orb.style.transform = 'scale(0.6)'; }
+  }
+  toggle.addEventListener('click', function(){
+    if(running) stopBreath(); else startBreath();
+  });
+  pick.addEventListener('change', function(){
+    current = pick.value;
+    if(!running){ phrase.style.opacity = 0; setTimeout(function(){ phrase.textContent = prayers[current].rest; phrase.style.opacity = 1; }, 260); }
+  });
+})();
+</script>
+</body>
+</html>
